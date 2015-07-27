@@ -1,0 +1,103 @@
+<div>
+    <div class="item clearfix ">
+        <div class="labels padding-right-zero pull-left">
+            <a href="javaScript:void(0);">Breadcrumb</a>>
+            <a href="javaScript:void(0);">Breadcrumb</a>>
+            <a href="javaScript:void(0);">Breadcrumb</a>
+        </div>
+    </div>
+    <hr>
+    <div class="item clearfix row">
+        <div class="labels col-md-3 padding-right-zero pull-left">
+            <span>Top Image</span>
+        </div>
+        <div class="main col-md-9 pull-right">
+            <div class="screens clearfix">
+                <div class="screen layouticon pull-left">
+                    <a class="border-grey border-radius-three default-background-hover">
+                        <span style="float: right; top: -20px; right: -20px; content: '-';" class="btn-icon btn-delete-icon btn-danger transition-third"></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr class="none">
+    <div class="item clearfix ">
+        <div class="labels col-md-3 padding-right-zero pull-left">
+            <span>First Name</span>
+        </div>
+        <div class="main col-md-9 pull-right">
+            <input type="text" class="form-control" ng-model="ContentPeoples.item.fName" placeholder="">
+        </div>
+    </div>
+    <hr class="none">
+    <div class="item clearfix ">
+        <div class="labels col-md-3 padding-right-zero pull-left">
+            <span>Last Name</span>
+        </div>
+        <div class="main col-md-9 pull-right">
+            <input type="text" class="form-control" ng-model="ContentPeoples.item.lName" placeholder="">
+        </div>
+    </div>
+    <hr class="none">
+    <div class="item clearfix ">
+        <div class="labels col-md-3 padding-right-zero pull-left">
+            <span>Position</span>
+        </div>
+        <div class="main col-md-9 pull-right">
+            <input type="text" class="form-control" ng-model="ContentPeoples.item.position" placeholder="">
+        </div>
+    </div>
+    <hr class="none">
+    <div class="item clearfix ">
+        <div class="labels col-md-3 padding-right-zero pull-left">
+            <span>Deep Link URL</span>
+        </div>
+        <div class="main col-md-9 pull-right">
+            <span>{{ContentPeoples.item.deepLinkUrl}}</span>
+        </div>
+    </div>
+    <hr class="none">
+    <div class="item clearfix ">
+        <div class="labels col-md-3 padding-right-zero pull-left">
+            <span>Description</span>
+        </div>
+        <div class="main col-md-9 pull-right">
+            <textarea class="form-control" ng-model="ContentPeoples.item.description"
+                      placeholder="WYSIWYG"></textarea>
+        </div>
+    </div>
+    <hr class="none">
+    <div class="item clearfix ">
+        <div class="labels col-md-3 padding-right-zero pull-left">
+            <span>Links</span>
+        </div>
+        <div class="main col-md-9 pull-right">
+            <div class="clearfix">
+                <a class="btn btn-success pull-left">Add Links</a>
+            </div>
+            <div class="carousel-items draggable-list-view margin-top-twenty border-radius-four border-grey">
+                <div class="d-item" ng-repeat="_link in ContentPeoples.item.links">
+                    <span class="icon icon-menu"></span>
+                    <img ng-src={{_link.iconImageUrl}} class="border-radius-four border-grey">
+
+                    <div class="copy pull-right">
+                        <span class="title ellipsis">{{_link.title}}</span>
+                        <span class="title ellipsis">{{_link.value}}</span>
+                        <span class="btn-icon btn-delete-icon btn-danger"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr class="none">
+    <div class="item clearfix ">
+        <div class="col-md-4 pull-right">
+            <a class="btn btn-success pull-right stretch" ng-click="ContentPeoples.addNewItem('/')" href="javaScript:void(0);">Save</a>
+        </div>
+        <div class="col-md-4 pull-right">
+            <a class="btn btn-danger pull-right stretch" href="#/">Cancel</a>
+        </div>
+    </div>
+</div>
+
