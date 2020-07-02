@@ -1,31 +1,26 @@
-<div class="holder padding-zero">
-  <div class="people-plugin listlayout1">
+<div class="holder load-in padding-zero">
+  <div class="people-plugin listlayout3">
     <div class="plugin-banner clearfix">
       <div ng-show="WidgetHome.shouldShowCarousel()" id="carousel" build-fire-carousel=""
            ng-style="WidgetHome.data.content.images.length > 0 ? {'min-height': (9 * deviceWidth / 16) + 'px' } : {}"></div>
     </div>
-    <div class="padded padding-bottom-zero text-left text-overlay" ng-class="{'set-top-padding': !WidgetHome.data.content.description}">
-      <p
-          ng-show="WidgetHome.shouldShowDescription()"
-          ng-bind-html="WidgetHome.safeHtml(WidgetHome.data.content.description)"
-          class="margin-bottom-zero text-overlay"></p>
-      <hr class="small" ng-show="WidgetHome.shouldShowDescription()">
-      <div>
-        <div class="list-items" ng-if="WidgetHome.data" infinite-scroll-distance="1" data-infinite-container=".infinite-scroll-parent" infinite-scroll="WidgetHome.loadMore(undefined,undefined,true)" infinite-scroll-disabled="WidgetHome.noMore">
-          <div class="list-item clearfix" ng-repeat="item in WidgetHome.items">
-            <div ng-if="item.data.topImage" class="media-round pull-left border-radius-four people-thumbnail margin-right-ten" ng-click="WidgetHome.getPeopleDetails(item.id)">
-              <img class="people-thumbnail-img text-overlay-round" load-image="1x1" crop-width="120" crop-height="120" crop-type="crop" data-final-src="{{item.data.topImage}}">
-            </div>
-            <!-- <div ng-if="!item.data.topImage" class="media pull-left border-radius-four people-thumbnail margin-right-ten" ng-click="WidgetHome.getPeopleDetails(item.id)">
-              <div class="people-thumbnail-img text-overlay" style="background-image: url(../../../styles/media/holder-2x1.png); background-size: cover; background-position: center;height: 60px"></div>
-            </div> -->
-            <div class="content margin-top-ten padding-left-zero" ng-click="WidgetHome.getPeopleDetails(item.id)" style="min-height:50px;">
-              <p class="text-primary ellipsis margin-zero text-overlay">
-        <a class="person-name">{{item.data.fName}} {{item.data.lName}}</a>
-        </p>
-              <p class="margin-bottom-zero ellipsis body-content-word-break text-overlay person-position" ng-if="item.data.position">{{item.data.position}}</p>
-              <p class="margin-bottom-zero ellipsis body-content-word-break text-overlay" ng-if="!item.data.bodyContent"></p>
-            </div>
+    <div ng-class="{'set-top-padding': !WidgetHome.data.content.description}">
+      <div class="main-header word-break" ng-show="WidgetHome.shouldShowDescription()">
+        <p  ng-bind-html="WidgetHome.safeHtml(WidgetHome.data.content.description)"
+            class="margin-bottom-zero text-overlay"></p>
+      </div>
+      <div class="list-items list-layout" ng-if="WidgetHome.data" infinite-scroll-distance="1" data-infinite-container=".infinite-scroll-parent" infinite-scroll="WidgetHome.loadMore(undefined,undefined,true)" infinite-scroll-disabled="WidgetHome.noMore">
+        <div class="list-item" ng-repeat="item in WidgetHome.items" ng-click="WidgetHome.getPeopleDetails(item.id)">
+          <div ng-if="item.data.topImage" class="media">
+            <img class="people-thumbnail-img text-overlay-round" load-image="1x1" crop-width="120" crop-height="120" crop-type="crop" data-final-src="{{item.data.topImage}}">
+          </div>
+          <!-- <div ng-if="!item.data.topImage" class="media pull-left border-radius-four people-thumbnail margin-right-ten" ng-click="WidgetHome.getPeopleDetails(item.id)">
+            <div class="people-thumbnail-img text-overlay" style="background-image: url(../../../styles/media/holder-2x1.png); background-size: cover; background-position: center;height: 60px"></div>
+          </div> -->
+          <div class="content ellipsis">
+            <h5 class="ellipsis margin-zero">{{item.data.fName}} {{item.data.lName}}</h5>
+            <p class="margin-bottom-zero ellipsis body-content-word-break text-overlay" ng-if="item.data.position">{{item.data.position}}</p>
+            <p class="margin-bottom-zero ellipsis body-content-word-break text-overlay" ng-if="!item.data.bodyContent"></p>
           </div>
         </div>
       </div>

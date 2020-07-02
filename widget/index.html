@@ -34,20 +34,20 @@
 </head>
 <body class="body-scroll" style="overflow-y: hidden !important">
 <div class="main_view" ng-controller="WidgetHomeCtrl as WidgetHome">
-  <div class="no-matches" ng-if="searchInput && WidgetHome.items.length <= 0">
+  <div class="no-matches load-in backgroundColorTheme" ng-if="searchInput && WidgetHome.items.length <= 0">
     <h1>NO RESULTS</h1>
     <h2>Please try a different search query.</h2>
   </div>
-  <form class="search-form form" ng-submit="onSearchSubmit(this)" ng-show="showHome">
-    <div class="search-container">
+  <form class="search-form form search-holder" ng-submit="onSearchSubmit(this)" ng-show="showHome">
+    <div class="search-container backgroundColorTheme">
       <img class="search-icon" src="search.png" alt="Search"/>
-      <img ng-click="clear()" class="search-clear" src="close.png" alt="Clear"/>
       <input
-        class="search-box"
-        ng-change="onSearchChange()"
-        ng-model="searchInput"
-        type="text"
-        placeholder="Search" />
+      class="form-control bodyTextTheme"
+      ng-change="onSearchChange()"
+      ng-model="searchInput"
+      type="text"
+      placeholder="Search" />
+      <button ng-click="clear()" class="btn-icon icon icon-cross2 search-clear" alt="Clear"/></button>
     </div>
   </form>
   <div class="slide infinite-scroll-parent" id="scrollable" data-back-img="{{ backgroundImage}}" ng-show="showHome">

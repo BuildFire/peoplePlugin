@@ -2,7 +2,7 @@
 	<div class="people-plugin layout1">
 		<div class="plugin-banner clearfix">
 			<div class="plugin-slider text-center">
-				<div  ng-if="WidgetPeople.item.topImage"  class="text-overlay" style="min-height: 200px">
+				<div  ng-if="WidgetPeople.item.topImage"  class="detail-img">
 					<img load-image="16x9" data-final-src="{{WidgetPeople.item.topImage}}" crop-width="400" crop-height="235" crop-type="crop">
 					<img ng-if="!WidgetPeople.item.topImage" src="../../../styles/media/holder-2x1.png">
 				</div>
@@ -11,21 +11,18 @@
 				</div>-->
 			</div>
 		</div>
-		<div class="people-info text-left padded padding-bottom-zero padding-top-ten clearfix ">
-			<div class="col-xs-9 padding-zero pull-left">
-				<p class="margin-zero text-overlay" style="font-size: 16px">{{WidgetPeople.item.fName}} {{WidgetPeople.item.lName}}</p>
+		<div class="people-info main-header">
+			<div class="copy">
+				<h5 class="margin-zero text-overlay">{{WidgetPeople.item.fName}} {{WidgetPeople.item.lName}}</h5>
 				<p class="margin-bottom-zero">{{WidgetPeople.item.position}}</p>
 				<p class="margin-bottom-zero" ng-show="WidgetPeople.item.email && !WidgetPeople.hideEmail"><a href="mailto:{{WidgetPeople.item.email}}">{{WidgetPeople.item.email}}</a>
 					<br><a href="{{'tel:'+WidgetPeople.item.phone}}">{{WidgetPeople.item.phone}}</a>
 				</p>
 			</div>
-			<div class="col-xs-3 padding-right-zero pull-right text-right text-overlay margin-top-ten">
-				<button ng-if="WidgetPeople.item.socialLinks.length" class="btn btn-primary btn-details btn-sm btnlayout1" ng-click="WidgetPeople.openLinks(WidgetPeople.item.socialLinks)">{{WidgetPeople.actionButtonText}}</button>
-				<!-- <a ng-if="WidgetPeople.item.socialLinks.length" class="icon icon-profile text-overlay" ng-click="WidgetPeople.openLinks(WidgetPeople.item.socialLinks)"></a> -->
-			</div>
+			<button ng-if="WidgetPeople.item.socialLinks.length" class="btn btn-primary btn-details btn-sm" ng-click="WidgetPeople.openLinks(WidgetPeople.item.socialLinks)">Contact</button>
+			<!-- <a ng-if="WidgetPeople.item.socialLinks.length" class="icon icon-profile text-overlay" ng-click="WidgetPeople.openLinks(WidgetPeople.item.socialLinks)"></a> -->
 		</div>
-		<div class="padded padding-top-zero">
-			<hr class="small">
+		<div class="padded">
 			<p class="break-word text-overlay" ng-if='WidgetPeople.item.bodyContent' ng-bind-html='WidgetPeople.safeHtml(WidgetPeople.item.bodyContent)'></p>
 			<p class="break-word" ng-if='!WidgetPeople.item.bodyContent'></p>
 		</div>

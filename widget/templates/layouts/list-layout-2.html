@@ -1,41 +1,32 @@
-<div class="holder padding-zero">
-  <div class="people-plugin listlayout1" >
+<div class="holder load-in padding-zero">
+  <div class="people-plugin listlayout2" >
     <div class="plugin-banner clearfix">
         <div ng-show="WidgetHome.shouldShowCarousel()" id="carousel" build-fire-carousel=""
              ng-style="WidgetHome.data.content.images.length > 0 ? {'min-height': (9 * deviceWidth / 16) + 'px' } : {}"></div>
     </div>
-    <div class="padded text-left text-overlay" ng-show="WidgetHome.shouldShowDescription()">
-      <p
-        ng-bind-html='WidgetHome.safeHtml(WidgetHome.data.content.description)'
-        class="margin-bottom-zero"></p>
+    <div class="main-header word-break" ng-show="WidgetHome.shouldShowDescription()">
+      <p ng-bind-html='WidgetHome.safeHtml(WidgetHome.data.content.description)'
+         class="margin-bottom-zero"></p>
     </div>
-    <br />
     <div>
-      <div class="list-items text-overlay" ng-if="WidgetHome.data"
+      <div class="list-items text-overlay list-layout" ng-if="WidgetHome.data"
            infinite-scroll-distance="0"
            infinite-scroll="WidgetHome.loadMore(undefined,undefined,true)"
            infinite-scroll-disabled="WidgetHome.noMore"
            data-infinite-container=".infinite-scroll-parent">
-      <span ng-repeat="item in WidgetHome.items">
-      <div class="clearfix text-overlay" ng-click="WidgetHome.getPeopleDetails(item.id)">
-        <div class="plugin-banner clearfix">
-          <div class="plugin-slide text-center">
+      <div class="list-item" ng-repeat="item in WidgetHome.items" ng-click="WidgetHome.getPeopleDetails(item.id)">
+        <div class="plugin-banner">
+          <div class="media-holder">
             <img ng-if="item.data.topImage" load-image="239x1" data-final-src="{{item.data.topImage}} " crop-width="400" crop-height="192" crop-type="crop">
             <img ng-if="!item.data.topImage" src="../../../styles/media/holder-2x1.png" >
           </div>
         </div>
+        <div class="padded text-left" >
+          <h5 class="text-primary word-break">{{item.data.fName}} {{item.data.lName}}</h5>
+          <p class="margin-bottom-zero ellipsis body-content-word-break" ng-if="item.data.position">{{item.data.position}}
+          <p class="margin-bottom-zero body-content-word-break" ng-if="!item.data.bodyContent"></p>
+        </div>
       </div>
-		<div class="padded text-left text-overlay" ng-click="WidgetHome.getPeopleDetails(item.id)">
-      <a class="text-primary">{{item.data.fName}}
-        {{item.data.lName}}</a>
-
-      <p class="margin-bottom-zero ellipsis body-content-word-break text-overlay"
-         ng-if="item.data.position">{{item.data.position}}
-
-      <p class="margin-bottom-zero body-content-word-break text-overlay"
-         ng-if="!item.data.bodyContent"></p>
-    </div>
-    </span>
       </div>
     </div>
   </div>

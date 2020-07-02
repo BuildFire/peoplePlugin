@@ -5,11 +5,11 @@
 			<div class="people-bg padding-top-fifteen padding-bottom-fifteen clearfix">
 				<div class="people-holder clearfix">
 					<div class="people-media text-center">
-						<img load-image="1x1" class="border-grey img-circle text-overlay" style="min-width: 100px;min-height: 100px"
+						<img load-image="1x1" class="img-circle"
                  data-final-src="{{WidgetPeople.item.topImage}}" crop-width="100" crop-height="100" crop-type="crop">
 					</div>
 					<div class="people-info text-center col-md-12">
-						<p class="ellipsis text-overlay whiteTheme">{{WidgetPeople.item.fName}} {{WidgetPeople.item.lName}}</p>
+						<h5 class="ellipsis text-overlay whiteTheme">{{WidgetPeople.item.fName}} {{WidgetPeople.item.lName}}</h5>
 						<p class="ellipsis whiteTheme">{{WidgetPeople.item.position}}</p>
       			<!-- <a ng-if="WidgetPeople.item.socialLinks.length" class="icon icon-profile text-overlay" ng-click="WidgetPeople.openLinks(WidgetPeople.item.socialLinks)"></a> -->
       			<button ng-if="WidgetPeople.item.socialLinks.length" class="btn btn-primary btn-details btn-sm" ng-click="WidgetPeople.openLinks(WidgetPeople.item.socialLinks)">{{WidgetPeople.actionButtonText}}</button>

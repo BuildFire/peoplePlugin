@@ -4,14 +4,14 @@
 		<div class="people-banner text-overlay" style="min-height: 267px" ng-if="WidgetPeople.item.topImage" data-ng-attr-style="background:url({{WidgetPeople.item.topImage}}) no-repeat; background-position:center center; background-size:cover !important; " crop-width="342" crop-height="267" crop-type="crop">
 			<div class="people-bg padding-top-fifteen padding-bottom-fifteen clearfix">
 				<div class="people-holder clearfix">
-					<div class="people-media text-center">
-						<img class="border-grey img-circle text-overlay" load-image="1x1" style="min-height: 140px;min-width: 140px"
+					<div class="people-media text-center margin-bottom-thirty">
+						<img class="img-circle text-overlay" load-image="1x1"
                  data-final-src="{{WidgetPeople.item.topImage}}" crop-width="140" crop-height="140" crop-type="crop">
 					</div>
-					<div class="people-info text-center margin-top-fifteen col-md-12">
-						<p class="text-overlay" style="color:#5f5f5f !important; font-size: 16px !important;">{{WidgetPeople.item.fName}} {{WidgetPeople.item.lName}}</p>
-						<p style="color:#5f5f5f !important;">{{WidgetPeople.item.position}}</p>
-						<p style="color:#5f5f5f !important;" ng-show="WidgetPeople.item.email && !WidgetPeople.hideEmail" ng-click="">{{WidgetPeople.item.email}}</p>
+					<div class="people-info text-center">
+						<h5 class="text-overlay blackTheme ellipsis">{{WidgetPeople.item.fName}} {{WidgetPeople.item.lName}}</h5>
+						<p class="caption blackTheme margin-top-five ellipsis">{{WidgetPeople.item.position}}</p>
+						<p class="blackTheme ellipsis" ng-show="WidgetPeople.item.email && !WidgetPeople.hideEmail" ng-click="">{{WidgetPeople.item.email}}</p>
             <!-- <a ng-if="WidgetPeople.item.socialLinks.length" class="icon icon-profile text-overlay" ng-click="WidgetPeople.openLinks(WidgetPeople.item.socialLinks)"></a> -->
             <button ng-if="WidgetPeople.item.socialLinks.length" class="btn btn-primary btn-details btn-sm" ng-click="WidgetPeople.openLinks(WidgetPeople.item.socialLinks)">{{WidgetPeople.actionButtonText}}</button>
 					</div>
