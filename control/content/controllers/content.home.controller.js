@@ -419,7 +419,6 @@
                 rows[index].rank = rank;
               }
               if (validateCsv(rows)) {
-                console.log(rows);
                 var searchEngineInsertingFinished = false;
                 for (var i = 0; i < rows.length; i++) {
                   var searchEngineInsert = function (counter) {
@@ -442,10 +441,35 @@
                   searchEngineInsert(i);
                 }
 
+                var setDeepLinks = function (){
+                  Buildfire[window.DB_PROVIDER].search({filter: {}, recordCount: true}, TAG_NAMES.PEOPLE, function(err, counter){
+                    var numberOfRecords = counter.totalRecord;
+                      for (let skip = 0; skip < numberOfRecords; skip += 50) {
+                        Buildfire[window.DB_PROVIDER].search({filter: {}, skip, limit: 50}, TAG_NAMES.PEOPLE, function(err, res){
+                          for (let i = 0; i < res.length; i += 1) { 
+                            if(res[i].data.searchEngineDocumentId) {
+                              buildfire.services.searchEngine.update(
+                                {
+                                  id: res[i].data.searchEngineDocumentId,
+                                  tag: TAG_NAMES.PEOPLE,
+                                  title: res[i].data.fName || '' + ' ' + res[i].data.lName || '',
+                                  description: res[i].data.position,
+                                  data: {
+                                    deepLinkUrl: Buildfire.deeplink.createLink({id: res[i].id})
+                                  }
+                                })
+                            }
+                          }
+                        })
+                      }
+                  })
+                }
+
                 var intervalId = window.setInterval(function() {
                   if (searchEngineInsertingFinished) {
                     window.clearInterval(intervalId);
                     Buildfire[window.DB_PROVIDER].bulkInsert(rows, TAG_NAMES.PEOPLE, function (err, data) {
+                      setDeepLinks();
                       Buildfire.spinner.hide();
                       $scope.$apply();
                       if (err) {

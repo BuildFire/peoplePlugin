@@ -24,7 +24,7 @@
       /**
        * To make href urls safe on mobile
        */
-      $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|chrome-extension|cdvfile|file|sms|tel):/);
+      $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|chrome-extension|cdvfile|file):/);
 
 
       $routeProvider
@@ -141,7 +141,12 @@
       };
       buildfire.deeplink.getData(function (data) {
         if (data) {
-          Location.goTo("#/people/" + JSON.parse(data).id);
+          var startOfQueryString = data.deepLinkUrl.indexOf("?dld");
+          var deepLinkUrl = data.deepLinkUrl.slice(startOfQueryString + 5, data.deepLinkUrl.length);
+          var itemId = JSON.parse(deepLinkUrl).id;
+          window.setTimeout(function () {
+            Location.goTo("#/people/" + itemId);
+          }, 0); 
         }
       });
 
@@ -223,13 +228,12 @@
 
               window.ENABLE_UNIQUE_EMAIL = result.data.enableUniqueEmail;
               window.HIDE_EMAILS = result.data.hideEmails;
-              window.ACTION_ITEM_TEXT = result.data.actionButtonText;
+
             angular.bootstrap(document, ['peoplePluginWidget']);
           } catch (err) {
             window.DB_PROVIDER = defaultProvider;
             window.ENABLE_UNIQUE_EMAIL = false;
             window.HIDE_EMAILS = false;
-            window.ACTION_ITEM_TEXT = "Contact";
             angular.bootstrap(document, ['peoplePluginWidget']);
           }
         });

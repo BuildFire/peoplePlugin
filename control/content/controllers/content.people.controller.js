@@ -160,10 +160,10 @@
               item.data.rank = _rankOfLastItem;
 
               console.log("inserting....");
-              var insert = function (searchEngineDocumentId = null) {
-                item.data.searchEngineDocumentId = searchEngineDocumentId;
+              var insert = function (searchEngineDocument) {
+                item.data.searchEngineDocumentId = searchEngineDocument ? searchEngineDocument.id : null;
                 Buildfire[window.DB_PROVIDER].insert(item.data, TAG_NAMES.PEOPLE, false, function (err, data) {
-                  console.log("Inserted", data.id);
+                  console.log("Inserted", data.id, searchEngineDocument);
                   if (err) {
                       ContentPeople.isNewItemInserted = false;
                       return console.error('There was a problem saving your data');
@@ -174,7 +174,12 @@
                   _data.rank = item.data.rank;
                   updateMasterItem(item);
                   ContentPeople.item.data.deepLinkUrl = Buildfire.deeplink.createLink({id: data.id});
-                  ContentPeople.item.data.searchEngineDocumentId = searchEngineDocumentId;
+                  buildfire.services.searchEngine.update({
+                      ...searchEngineDocument, 
+                      tag: TAG_NAMES.PEOPLE,
+                      data: {deepLinkUrl: ContentPeople.item.data.deepLinkUrl }
+                  }, console.log);
+                  ContentPeople.item.data.searchEngineDocumentId = searchEngineDocument ? searchEngineDocument.id : null;
                   // Send message to widget as soon as a new item is created with its id as a parameter
                   if (ContentPeople.item.id) {
                       buildfire.messaging.sendMessageToWidget({
@@ -208,7 +213,7 @@
                     description: item.data.position
                   },
                   (err, response) => {
-                    insert(response && response.id ? response.id : null);
+                    insert(response);
                   }
                 );
               } else {
@@ -224,6 +229,7 @@
                       return console.error('There was a problem saving your data');
 
                   if (item && item.data && item.data.searchEngineDocumentId) {
+                    console.log(item);
                     const x = {
                       id: item.data.searchEngineDocumentId,
                       tag: TAG_NAMES.PEOPLE,
@@ -235,7 +241,8 @@
                         id: item.data.searchEngineDocumentId,
                         tag: TAG_NAMES.PEOPLE,
                         title: item.data.fName + ' ' + item.data.lName,
-                        description: item.data.position
+                        description: item.data.position,
+                        data: { deepLinkUrl: item.data.deepLinkUrl }
                       },
                       () => {}
                     );
