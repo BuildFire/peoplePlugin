@@ -100,6 +100,10 @@
                             Location.goToHome();
                         }
                         else {
+                            if(!result.id) {
+                                $rootScope.showHome = true;
+                                buildfire.history.pop();
+                            }
                             $rootScope.showHome = false;
 
                             if(result.data && result.data.socialLinks){
