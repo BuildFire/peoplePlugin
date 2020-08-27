@@ -245,6 +245,7 @@
             window.DB_PROVIDER = defaultProvider;
             window.ENABLE_UNIQUE_EMAIL = false;
             window.HIDE_EMAILS = false;
+            window.ACTION_ITEM_TEXT = "Contact";
             angular.bootstrap(document, ['peoplePluginWidget']);
           }
         });
