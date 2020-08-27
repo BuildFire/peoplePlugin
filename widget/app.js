@@ -239,7 +239,7 @@
 
               window.ENABLE_UNIQUE_EMAIL = result.data.enableUniqueEmail;
               window.HIDE_EMAILS = result.data.hideEmails;
-
+              window.ACTION_ITEM_TEXT = result.data.actionButtonText;
             angular.bootstrap(document, ['peoplePluginWidget']);
           } catch (err) {
             window.DB_PROVIDER = defaultProvider;

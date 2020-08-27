@@ -97,7 +97,8 @@
                     Buildfire[window.DB_PROVIDER].getById(itemId, TAG_NAMES.PEOPLE, function (err, result) {
                         if (err && err.code !== ERROR_CODE.NOT_FOUND) {
                             console.error('-----------Unable to load data-------------', err);
-                            Location.goToHome();
+                            $rootScope.showHome = true;
+                            buildfire.history.pop();
                         }
                         else {
                             if(!result.id) {
