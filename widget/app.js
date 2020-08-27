@@ -139,14 +139,16 @@
               Location.goToHome();
         }
       };
+
+      console.log($rootScope.fromDeepLink, $rootScope.showHome);
       buildfire.deeplink.getData(function (data) {
         if (data) {
           var startOfQueryString = data.deepLinkUrl.indexOf("?dld");
           var deepLinkUrl = data.deepLinkUrl.slice(startOfQueryString + 5, data.deepLinkUrl.length);
           var itemId = JSON.parse(deepLinkUrl).id;
-          window.setTimeout(function () {
-            Location.goTo("#/people/" + itemId);
-          }, 0); 
+          window.setTimeout(function() {
+              Location.goTo("#/people/" + itemId);
+          }, 0);
         }
       });
 
@@ -154,8 +156,17 @@
         if (($location.path() != '/')) {
           buildfire.messaging.sendMessageToControl({});
           $rootScope.showHome = true;
+          buildfire.history.get({
+            pluginBreadcrumbsOnly: true
+          },function(err, result){
+              result.forEach(function() {
+                buildfire.history.pop();
+              });
+          });
+        } else {
+          buildfire.navigation._goBackOne();
         }
-        buildfire.navigation._goBackOne();
+        
       };
 
       buildfire.history.onPop(function(data, err){
