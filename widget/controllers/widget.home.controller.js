@@ -27,6 +27,8 @@
                     WidgetHome.loadMore();
                 }, 500);
 
+
+
                 /*unqiueList*/
                 (function () {
                     var unqiueListEmail = {};
@@ -279,6 +281,7 @@
                                 currentSortOrder = WidgetHome.data.content.sortBy;
                             }
                             $rootScope.backgroundImage = WidgetHome.data.design.backgroundImage ? WidgetHome.data.design.backgroundImage : "";
+
                         }
                         , error = function (err) {
                             if (err) {

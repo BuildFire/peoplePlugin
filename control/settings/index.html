@@ -36,6 +36,9 @@
             } else {
                 document.getElementById('actionButtonText').value = "Contact";
             }
+            if(result && result.data && result.data.enableShare) {
+                document.getElementById('chkEnableShareButton').checked = true;
+            }
         });
 
         function save(provider){
@@ -44,12 +47,14 @@
             var enableUniqueEmail = document.getElementById("chkEnableUniqueEmail").checked == true;
             var chckHideEmails = document.getElementById('chckHideEmails').checked == true;
             var actionBtnText = document.getElementById('actionButtonText').value;
+            var enableShare = document.getElementById('chkEnableShareButton').checked;
 
             buildfire.datastore.save({
               provider: providerId,
               enableUniqueEmail: enableUniqueEmail,
               hideEmails: chckHideEmails,
-              actionButtonText: actionBtnText
+              actionButtonText: actionBtnText,
+              enableShare: enableShare
             }, tag, function () {
                 console.log('saving data');
             });
@@ -97,6 +102,17 @@
           <p class="info padding-zero">Warning: If checked, emails wont show even if you add any.</p>
       </div>
   </div>
+  <div class="item clearfix row" style="display: none;">
+    <div class="labels col-xs-3">
+        <span>Enable Share Button</span>
+    </div>
+    <div class="col-xs-7">
+        <div class="radio-primary radio-block">
+            <input id="chkEnableShareButton" type="checkbox" onclick="save()">
+        </div>
+        <!-- <p class="info padding-zero">Warning: If checked, the email will be verified as unique when adding new person(s).</p> -->
+    </div>
+</div>
   <div class="item clearfix row">
     <div class="labels col-xs-3">
         <span>Contact Button Text</span>

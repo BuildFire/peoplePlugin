@@ -455,7 +455,7 @@
                                   title: res[i].data.fName || '' + ' ' + res[i].data.lName || '',
                                   description: res[i].data.position,
                                   data: {
-                                    deepLinkUrl: Buildfire.deeplink.createLink({id: res[i].id})
+                                    id: res[i].id
                                   }
                                 })
                             }

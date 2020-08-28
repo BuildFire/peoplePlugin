@@ -139,15 +139,13 @@
               Location.goToHome();
         }
       };
+      $rootScope.calledOnce = false;
 
-      console.log($rootScope.fromDeepLink, $rootScope.showHome);
       buildfire.deeplink.getData(function (data) {
-        if (data) {
-          var startOfQueryString = data.deepLinkUrl.indexOf("?dld");
-          var deepLinkUrl = data.deepLinkUrl.slice(startOfQueryString + 5, data.deepLinkUrl.length);
-          var itemId = JSON.parse(deepLinkUrl).id;
+        if (data && !$rootScope.calledOnce && data.id) {
+          $rootScope.calledOnce = true;
           window.setTimeout(function() {
-              Location.goTo("#/people/" + itemId);
+              Location.goTo("#/people/" + data.id);
           }, 0);
         }
       });
@@ -240,12 +238,14 @@
               window.ENABLE_UNIQUE_EMAIL = result.data.enableUniqueEmail;
               window.HIDE_EMAILS = result.data.hideEmails;
               window.ACTION_ITEM_TEXT = result.data.actionButtonText;
+              window.ENABLE_SHARE = result.data.enableShare;
             angular.bootstrap(document, ['peoplePluginWidget']);
           } catch (err) {
             window.DB_PROVIDER = defaultProvider;
             window.ENABLE_UNIQUE_EMAIL = false;
             window.HIDE_EMAILS = false;
             window.ACTION_ITEM_TEXT = "Contact";
+            window.ENABLE_SHARE = false;
             angular.bootstrap(document, ['peoplePluginWidget']);
           }
         });
