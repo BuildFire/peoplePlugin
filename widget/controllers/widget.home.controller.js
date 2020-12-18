@@ -438,7 +438,7 @@
                             $or: [
                                 { "$json.fName": { $regex: $scope.searchInput, $options: 'i' } },
                                 { "$json.lName": { $regex: $scope.searchInput, $options: 'i' } },
-                                { "$json.position": { $regex: $scope.searchInput, $options: 'i' } }
+                                { "$json.position": { $regex: $scope.searchInput, $options: 'i' } },
                             ]
                         };
                         if (window.ENABLE_UNIQUE_EMAIL) {

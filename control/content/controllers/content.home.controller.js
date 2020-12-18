@@ -26,9 +26,40 @@
         //Scroll current view to top when page loaded.
         buildfire.navigation.scrollTop();
 
+        var setDeepLinks = ()=>{
+          Buildfire[window.DB_PROVIDER].search({filter: {}, recordCount: true}, TAG_NAMES.PEOPLE, (err, counter)=>{
+            var numberOfRecords = counter.totalRecord;
+              for (let skip = 0; skip < numberOfRecords; skip += 50) {
+                Buildfire[window.DB_PROVIDER].search({filter: {}, skip, limit: 50}, TAG_NAMES.PEOPLE, (err, res)=>{
+                  for (let i = 0; i < res.length; i += 1) { 
+                    if(res[i].data.searchEngineDocumentId) {
+                      buildfire.services.searchEngine.update(
+                        {
+                          id: res[i].data.searchEngineDocumentId,
+                          tag: TAG_NAMES.PEOPLE,
+                          title: (res[i].data.fName || '') + ' ' + (res[i].data.lName || ''),
+                          description: res[i].data.position + " " +
+                                       res[i].data.email + " " +
+                                       res[i].data.phone +" " +
+                                       (res[i].data.bodyContent ? res[i].data.bodyContent.replace(/<[^>]*>?/gm, '') : ""),
+                          data: {
+                            id: res[i].id
+                          }
+                        }, (err, data)=>{
+                        })
+                    }
+                  }
+                })
+              }
+          })
+        }
+
+        setDeepLinks();
+
         function isValidItem(item, index, array) {
           return item.fName || item.lName;
         }
+        
 
         function validateCsv(items) {
           if (!Array.isArray(items) || !items.length) {
@@ -334,6 +365,7 @@
          * ContentHome.loadMore() called by infiniteScroll to implement lazy loading
          */
         ContentHome.noMore = false;
+
         ContentHome.loadMore = function (search) {
             Buildfire.spinner.show();
           if (ContentHome.busy) {
@@ -394,10 +426,13 @@
               });
           };
 
+
+
+
         /**
          * method to open the importCSV Dialog
          */
-        ContentHome.openImportCSVDialog = function () {
+        ContentHome.openImportCSVDialog = ()=> {
 
           buildfire.navigation.scrollTop();
 
@@ -408,7 +443,7 @@
               controllerAs: 'ImportCSVPopup',
               size: 'sm'
             });
-          modalInstance.result.then(function (rows) {
+          modalInstance.result.then((rows)=>{
             Buildfire.spinner.show();
             if (rows && rows.length) {
               var rank = ContentHome.data.content.rankOfLastItem || 0;
@@ -420,13 +455,17 @@
               }
               if (validateCsv(rows)) {
                 var searchEngineInsertingFinished = false;
+
                 for (var i = 0; i < rows.length; i++) {
-                  var searchEngineInsert = function (counter) {
+                  var searchEngineInsert = (counter) => {
                     buildfire.services.searchEngine.insert(
                       {
                         tag: TAG_NAMES.PEOPLE,
                         title: rows[counter].fName + ' ' + rows[counter].lName,
-                        description: rows[counter].position
+                        description: rows[counter].position + " " +
+                                     rows[counter].email + " " +
+                                     rows[counter].phone + " " +
+                                     (rows[counter].bodyContent ? rows[counter].bodyContent.replace(/<[^>]*>?/gm, '') : "")
                       },
                       (err, response) => {
                         if (err) {
@@ -441,29 +480,6 @@
                   searchEngineInsert(i);
                 }
 
-                var setDeepLinks = function (){
-                  Buildfire[window.DB_PROVIDER].search({filter: {}, recordCount: true}, TAG_NAMES.PEOPLE, function(err, counter){
-                    var numberOfRecords = counter.totalRecord;
-                      for (let skip = 0; skip < numberOfRecords; skip += 50) {
-                        Buildfire[window.DB_PROVIDER].search({filter: {}, skip, limit: 50}, TAG_NAMES.PEOPLE, function(err, res){
-                          for (let i = 0; i < res.length; i += 1) { 
-                            if(res[i].data.searchEngineDocumentId) {
-                              buildfire.services.searchEngine.update(
-                                {
-                                  id: res[i].data.searchEngineDocumentId,
-                                  tag: TAG_NAMES.PEOPLE,
-                                  title: res[i].data.fName || '' + ' ' + res[i].data.lName || '',
-                                  description: res[i].data.position,
-                                  data: {
-                                    id: res[i].id
-                                  }
-                                })
-                            }
-                          }
-                        })
-                      }
-                  })
-                }
 
                 var intervalId = window.setInterval(function() {
                   if (searchEngineInsertingFinished) {
