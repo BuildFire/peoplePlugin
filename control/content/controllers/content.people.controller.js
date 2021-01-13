@@ -108,7 +108,7 @@
           Location.goToHome();
         };
 
-        
+
 
         ContentPeople.getItem = function (itemId) {
           var setItem = function (item) {
@@ -166,8 +166,8 @@
         }
 
         ContentPeople.addNewItem = function (item) {
-          /*if (item.data)
-              item.data.email = $scope.draft_email;*/
+          if (item.data)
+            item.data.email = $scope.draft_email;
           ContentPeople.isNewItemInserted = true;
           _rankOfLastItem = _rankOfLastItem + 10;
           item.data.dateCreated = +new Date();
@@ -189,10 +189,10 @@
               updateMasterItem(item);
               ContentPeople.item.data.deepLinkUrl = Buildfire.deeplink.createLink({ id: data.id });
               buildfire.services.searchEngine.update({
-                ...searchEngineDocument, 
+                ...searchEngineDocument,
                 tag: TAG_NAMES.PEOPLE,
-                data: {id: data.id }
-              },);
+                data: { id: data.id }
+              });
               ContentPeople.item.data.searchEngineDocumentId = searchEngineDocument ? searchEngineDocument.id : null;
               // Send message to widget as soon as a new item is created with its id as a parameter
               if (ContentPeople.item.id) {
@@ -224,7 +224,10 @@
               {
                 tag: TAG_NAMES.PEOPLE,
                 title: item.data.fName + ' ' + item.data.lName,
-                description: item.data.position
+                description: item.data.position + " " +
+                  item.data.email + " " +
+                  item.data.phone + " " +
+                  (item.data.bodyContent ? item.data.bodyContent.replace(/<[^>]*>?/gm, '') : "")
               },
               (err, response) => {
                 insert(response);
@@ -235,7 +238,12 @@
           }
         };
 
+
+
+
         ContentPeople.updateItemData = function (item) {
+          if (item.data)
+            item.data.email = $scope.draft_email;
           Buildfire[window.DB_PROVIDER].update(item.id, item.data, TAG_NAMES.PEOPLE, function (err) {
             updateMasterItem(item);
             ContentPeople.isUpdating = false;
@@ -254,7 +262,10 @@
                   id: item.data.searchEngineDocumentId,
                   tag: TAG_NAMES.PEOPLE,
                   title: item.data.fName + ' ' + item.data.lName,
-                  description: item.data.position,
+                  description: item.data.position + " " +
+                    item.data.email + " " +
+                    item.data.phone + " " +
+                    (item.data.bodyContent ? item.data.bodyContent.replace(/<[^>]*>?/gm, '') : ""),
                   data: { id: item.id }
                 },
                 () => { }
@@ -387,7 +398,7 @@
         $scope.$watch(function () {
           var item = {};
           angular.copy(ContentPeople.item, item);
-          item.data.email = $scope.draft_email ? $scope.draft_email.toLowerCase() : '';
+          item.data.email = $scope.draft_email.toLowerCase();
           return item;
         }, updateItemsWithDelay, true);
 
