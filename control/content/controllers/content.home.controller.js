@@ -18,48 +18,60 @@
           bodyContent: "Information"
         };
 
-          /**
-           * SearchOptions are using for searching , sorting people and fetching people list
-           * @type object
-           */
+        /**
+         * SearchOptions are using for searching , sorting people and fetching people list
+         * @type object
+         */
 
         //Scroll current view to top when page loaded.
         buildfire.navigation.scrollTop();
 
-        var setDeepLinks = ()=>{
-          Buildfire[window.DB_PROVIDER].search({filter: {}, recordCount: true}, TAG_NAMES.PEOPLE, (err, counter)=>{
+        var setDeepLinks = (saveVersion) => {
+          Buildfire[window.DB_PROVIDER].search({ filter: {}, recordCount: true }, TAG_NAMES.PEOPLE, (err, counter) => {
             var numberOfRecords = counter.totalRecord;
-              for (let skip = 0; skip < numberOfRecords; skip += 50) {
-                Buildfire[window.DB_PROVIDER].search({filter: {}, skip, limit: 50}, TAG_NAMES.PEOPLE, (err, res)=>{
-                  for (let i = 0; i < res.length; i += 1) { 
-                    if(res[i].data.searchEngineDocumentId) {
-                      buildfire.services.searchEngine.update(
-                        {
-                          id: res[i].data.searchEngineDocumentId,
-                          tag: TAG_NAMES.PEOPLE,
-                          title: (res[i].data.fName || '') + ' ' + (res[i].data.lName || ''),
-                          description: res[i].data.position + " " +
-                                       res[i].data.email + " " +
-                                       res[i].data.phone +" " +
-                                       (res[i].data.bodyContent ? res[i].data.bodyContent.replace(/<[^>]*>?/gm, '') : ""),
-                          data: {
-                            id: res[i].id
-                          }
-                        }, (err, data)=>{
-                        })
-                    }
+            for (let skip = 0; skip < numberOfRecords; skip += 50) {
+              Buildfire[window.DB_PROVIDER].search({ filter: {}, skip, limit: 50 }, TAG_NAMES.PEOPLE, (err, res) => {
+                for (let i = 0; i < res.length; i += 1) {
+                  if (res[i].data.searchEngineDocumentId) {
+                    buildfire.services.searchEngine.update(
+                      {
+                        id: res[i].data.searchEngineDocumentId,
+                        tag: TAG_NAMES.PEOPLE,
+                        title: (res[i].data.fName || '') + ' ' + (res[i].data.lName || ''),
+                        description: res[i].data.position + " " +
+                          res[i].data.email + " " +
+                          res[i].data.phone + " " +
+                          (res[i].data.bodyContent ? res[i].data.bodyContent.replace(/<[^>]*>?/gm, '') : ""),
+                        data: {
+                          id: res[i].id
+                        }
+                      }, (err, data) => {
+                      })
                   }
-                })
-              }
+
+                  /// searchEngine version control
+
+                  if (saveVersion)
+                    buildfire.publicData.save({ "version": 1 }, "searchEngineVersion", (e, r) => { });
+                }
+              })
+            }
           })
         }
 
-        setDeepLinks();
+
+        buildfire.publicData.get("searchEngineVersion", (e, r) => {
+          if (!r || !r.data || !r.data.version || !r.data.version == 1) {
+            setDeepLinks(true);
+          }
+        });
+
+
 
         function isValidItem(item, index, array) {
           return item.fName || item.lName;
         }
-        
+
 
         function validateCsv(items) {
           if (!Array.isArray(items) || !items.length) {
@@ -71,9 +83,9 @@
         var initialLoad = false;
         var ContentHome = this;
         ContentHome.searchOptions = {
-              filter: {"$json.fName": {"$regex": '/*'}},
-              skip: SORT._skip,
-              limit: SORT._limit + 1 // the plus one is to check if there are any more
+          filter: { "$json.fName": { "$regex": '/*' } },
+          skip: SORT._skip,
+          limit: SORT._limit + 1 // the plus one is to check if there are any more
         };
 
         var providers = {
@@ -82,7 +94,7 @@
         };
 
         $scope.selectedProvider = providers[window.DB_PROVIDER];
-        $scope.changeDbProvider= function(selectedProvider){
+        $scope.changeDbProvider = function (selectedProvider) {
           Buildfire.datastore.save({
             provider: selectedProvider
           }, TAG_NAMES.DB_PROVIDER, function (err, result) {
@@ -182,15 +194,15 @@
           }
           else return url;
         }
-        
+
         ContentHome.descriptionWYSIWYGOptions = {
           plugins: 'advlist autolink link image lists charmap print preview',
           skin: 'lightgray',
           trusted: true,
           theme: 'modern',
-          urlconverter_callback : myCustomURLConverter,
-          plugin_preview_width : "500",
-          plugin_preview_height : "500"
+          urlconverter_callback: myCustomURLConverter,
+          plugin_preview_width: "500",
+          plugin_preview_height: "500"
         };
         ContentHome.data = PeopleInfo.data;
         if (!ContentHome.data.content.images)
@@ -199,10 +211,10 @@
           editor.loadItems(ContentHome.data.content.images);
 
         RankOfLastItem.setRank(ContentHome.data.content.rankOfLastItem || 99999);
-          /**
-         * ContentHome.imageSortableOptions used for ui-sortable directory to drag-drop carousel images Manually.
-         * @type object
-         */
+        /**
+       * ContentHome.imageSortableOptions used for ui-sortable directory to drag-drop carousel images Manually.
+       * @type object
+       */
         ContentHome.imageSortableOptions = {
           handle: '> .cursor-grab'
         };
@@ -211,9 +223,9 @@
          * resetManualSorting(item, items) used to fix if two or matching ranks found.
          * @param items are the list of all items being sorted.
          */
-        var resetManualSorting = function(items){
+        var resetManualSorting = function (items) {
           var newMaxRank = items.length;
-          for( var index = 0; index < items.length; index++ ) {
+          for (var index = 0; index < items.length; index++) {
             var item = items[index];
             item.data.rank = index + 1;
             Buildfire[window.DB_PROVIDER].update(item.id, item.data, TAG_NAMES.PEOPLE, function (err) {
@@ -257,7 +269,7 @@
         var tmrDelayForPeopleInfo = null;
 
         // Send message to widget to return to list layout
-        buildfire.messaging.sendMessageToWidget({type: 'Init'});
+        buildfire.messaging.sendMessageToWidget({ type: 'Init' });
 
         /**
          * saveData(newObj, tag) used to save a new record in publicData.
@@ -268,7 +280,7 @@
           if (newObj == undefined)
             return;
           newObj.content.rankOfLastItem = newObj.content.rankOfLastItem || 0;
-          Buildfire[window.DB_PROVIDER].save(newObj, tag , function (err, result) {
+          Buildfire[window.DB_PROVIDER].save(newObj, tag, function (err, result) {
             if (err || !result) {
               console.error('------------error saveData-------', err);
             }
@@ -287,79 +299,79 @@
           ContentHome.itemSortableOptions.disabled = true;
           switch (value) {
             case SORT.OLDEST_TO_NEWEST:
-              ContentHome.searchOptions.sort = {"dateCreated": 1};
+              ContentHome.searchOptions.sort = { "dateCreated": 1 };
               break;
             case SORT.NEWEST_TO_OLDEST:
-                ContentHome.searchOptions.sort = {"dateCreated": -1};
+              ContentHome.searchOptions.sort = { "dateCreated": -1 };
               break;
             case SORT.FIRST_NAME_A_TO_Z:
-                ContentHome.searchOptions.sort = {"fName": 1};
+              ContentHome.searchOptions.sort = { "fName": 1 };
               break;
             case SORT.FIRST_NAME_Z_TO_A:
-                ContentHome.searchOptions.sort = {"fName": -1};
+              ContentHome.searchOptions.sort = { "fName": -1 };
               break;
             case SORT.LAST_NAME_A_TO_Z:
-                ContentHome.searchOptions.sort = {"lName": 1};
+              ContentHome.searchOptions.sort = { "lName": 1 };
               break;
             case SORT.LAST_NAME_Z_TO_A:
-                ContentHome.searchOptions.sort = {"lName": -1};
+              ContentHome.searchOptions.sort = { "lName": -1 };
               break;
-            default :
+            default:
               ContentHome.itemSortableOptions.disabled = false;
-                ContentHome.searchOptions.sort = {"rank": 1};
+              ContentHome.searchOptions.sort = { "rank": 1 };
               break;
           }
           return ContentHome.searchOptions;
         };
 
-          /*unqiueList*/
-          (function () {
-              var unqiueList = {};
+        /*unqiueList*/
+        (function () {
+          var unqiueList = {};
 
-              $scope.validToAddItem = function (obj) {
-                  if (!ContentHome.items || ContentHome.items.length < 1) {
-                      return true;
-                  }
-                  if (window.ENABLE_UNIQUE_EMAIL && obj) {
-                      var key = obj.data && obj.data.email ? obj.data.email.toLowerCase() : null;
-                      if (unqiueList[key] || (typeof(obj.data.deleted) != "undefined" && obj.data.deleted.toString() == "true")) {
-                          return false;
-                      }
-                  }
-                  return true;
-              };
-              $scope.addToItems = function (obj) {
-                  if (window.ENABLE_UNIQUE_EMAIL && obj) {
-                      var key = obj.data && obj.data.email ? obj.data.email.toLowerCase() : null;
-                      if (unqiueList[key] || (typeof(obj.data.deleted) != "undefined" && obj.data.deleted.toString() == "true")) {
-                          return false;
-                      }
-                      if (!ContentHome.items) {
-                          ContentHome.items = [];
-                      }
-                      ContentHome.items.push(obj);
-                      if (key)
-                          unqiueList[key] = obj.id;
-                  }
-                  else{
-                      if (!ContentHome.items) {
-                          ContentHome.items = [];
-                      }
-                      ContentHome.items.push(obj);
-                  }
-                  return true;
-              };
-              $scope.addItems = function (items) {
-                  if (!ContentHome.items || ContentHome.items.length < 1) {
-                      unqiueList = {};
-                  }
-                  if (items) {
-                      for (var i = 0; i < items.length; i++) {
-                          $scope.addToItems(items[i]);
-                      }
-                  }
-              };
-          })();
+          $scope.validToAddItem = function (obj) {
+            if (!ContentHome.items || ContentHome.items.length < 1) {
+              return true;
+            }
+            if (window.ENABLE_UNIQUE_EMAIL && obj) {
+              var key = obj.data && obj.data.email ? obj.data.email.toLowerCase() : null;
+              if (unqiueList[key] || (typeof (obj.data.deleted) != "undefined" && obj.data.deleted.toString() == "true")) {
+                return false;
+              }
+            }
+            return true;
+          };
+          $scope.addToItems = function (obj) {
+            if (window.ENABLE_UNIQUE_EMAIL && obj) {
+              var key = obj.data && obj.data.email ? obj.data.email.toLowerCase() : null;
+              if (unqiueList[key] || (typeof (obj.data.deleted) != "undefined" && obj.data.deleted.toString() == "true")) {
+                return false;
+              }
+              if (!ContentHome.items) {
+                ContentHome.items = [];
+              }
+              ContentHome.items.push(obj);
+              if (key)
+                unqiueList[key] = obj.id;
+            }
+            else {
+              if (!ContentHome.items) {
+                ContentHome.items = [];
+              }
+              ContentHome.items.push(obj);
+            }
+            return true;
+          };
+          $scope.addItems = function (items) {
+            if (!ContentHome.items || ContentHome.items.length < 1) {
+              unqiueList = {};
+            }
+            if (items) {
+              for (var i = 0; i < items.length; i++) {
+                $scope.addToItems(items[i]);
+              }
+            }
+          };
+        })();
 
         /**
          * ContentHome.loadMore() called by infiniteScroll to implement lazy loading
@@ -367,21 +379,21 @@
         ContentHome.noMore = false;
 
         ContentHome.loadMore = function (search) {
-            Buildfire.spinner.show();
+          Buildfire.spinner.show();
           if (ContentHome.busy) {
             return;
           }
 
           ContentHome.busy = true;
           if (ContentHome.data && ContentHome.data.content.sortBy && !search) {
-              ContentHome.searchOptions = getSearchOptions(ContentHome.data.content.sortBy);
+            ContentHome.searchOptions = getSearchOptions(ContentHome.data.content.sortBy);
           }
 
           if (!ContentHome.searchOptions.filter['$and'])
-                ContentHome.searchOptions.filter['$and'] = [];
+            ContentHome.searchOptions.filter['$and'] = [];
           ContentHome.searchOptions.filter['$and'].push({
-              $or: [{'$json.deleted': {$exists: false}},
-                  {'$json.deleted': {$ne: 'true'}}]
+            $or: [{ '$json.deleted': { $exists: false } },
+            { '$json.deleted': { $ne: 'true' } }]
           });
 
           Buildfire[window.DB_PROVIDER].search(ContentHome.searchOptions, TAG_NAMES.PEOPLE, function (err, result) {
@@ -409,9 +421,9 @@
          */
         ContentHome.openDeepLinkDialog = function (item) {
           ContentHome.DeepLinkCopyUrl = true;
-          if(item && item.data && !item.data.deepLinkUrl) {
-              item.data.deepLinkUrl = Buildfire.deeplink.createLink({id: item.id});
-              ContentHome.updateItemData(item);
+          if (item && item.data && !item.data.deepLinkUrl) {
+            item.data.deepLinkUrl = Buildfire.deeplink.createLink({ id: item.id });
+            ContentHome.updateItemData(item);
           }
           setTimeout(function () {
             ContentHome.DeepLinkCopyUrl = false;
@@ -419,12 +431,12 @@
           }, 1500);
         };
 
-          ContentHome.updateItemData = function (item) {
-              Buildfire[window.DB_PROVIDER].update(item.id, item.data, TAG_NAMES.PEOPLE, function (err, result) {
-                  if (err)
-                      return console.error('There was a problem saving your data');
-              });
-          };
+        ContentHome.updateItemData = function (item) {
+          Buildfire[window.DB_PROVIDER].update(item.id, item.data, TAG_NAMES.PEOPLE, function (err, result) {
+            if (err)
+              return console.error('There was a problem saving your data');
+          });
+        };
 
 
 
@@ -432,7 +444,7 @@
         /**
          * method to open the importCSV Dialog
          */
-        ContentHome.openImportCSVDialog = ()=> {
+        ContentHome.openImportCSVDialog = () => {
 
           buildfire.navigation.scrollTop();
 
@@ -443,7 +455,7 @@
               controllerAs: 'ImportCSVPopup',
               size: 'sm'
             });
-          modalInstance.result.then((rows)=>{
+          modalInstance.result.then((rows) => {
             Buildfire.spinner.show();
             if (rows && rows.length) {
               var rank = ContentHome.data.content.rankOfLastItem || 0;
@@ -463,9 +475,9 @@
                         tag: TAG_NAMES.PEOPLE,
                         title: rows[counter].fName + ' ' + rows[counter].lName,
                         description: rows[counter].position + " " +
-                                     rows[counter].email + " " +
-                                     rows[counter].phone + " " +
-                                     (rows[counter].bodyContent ? rows[counter].bodyContent.replace(/<[^>]*>?/gm, '') : "")
+                          rows[counter].email + " " +
+                          rows[counter].phone + " " +
+                          (rows[counter].bodyContent ? rows[counter].bodyContent.replace(/<[^>]*>?/gm, '') : "")
                       },
                       (err, response) => {
                         if (err) {
@@ -481,16 +493,16 @@
                 }
 
 
-                var intervalId = window.setInterval(function() {
+                var intervalId = window.setInterval(function () {
                   if (searchEngineInsertingFinished) {
                     window.clearInterval(intervalId);
                     Buildfire[window.DB_PROVIDER].bulkInsert(rows, TAG_NAMES.PEOPLE, function (err, data) {
-                      setDeepLinks();
+                      setDeepLinks(false);
                       Buildfire.spinner.hide();
                       $scope.$apply();
                       if (err) {
-                        buildfire.notifications.alert('Failed to import CSV. Invalid file', function() {
-    
+                        buildfire.notifications.alert('Failed to import CSV. Invalid file', function () {
+
                         });
                         console.error('There was a problem while importing the file----', err);
                       }
@@ -506,8 +518,8 @@
                     });
                   }
                 }, 1000);
-                
-                
+
+
               } else {
                 Buildfire.spinner.hide();
                 //$scope.$apply();
@@ -523,7 +535,7 @@
             }
           }, function (error) {
             Buildfire.spinner.hide();
-           // $scope.$apply();
+            // $scope.$apply();
             //do something on cancel
           });
         };
@@ -533,10 +545,10 @@
          */
         ContentHome.exportCSV = function () {
           getRecords({
-              filter: {"$json.fName": {"$regex": '/*'}},
-              skip: 0,
-              limit: SORT._maxLimit + 1 // the plus one is to check if there are any more
-            },
+            filter: { "$json.fName": { "$regex": '/*' } },
+            skip: 0,
+            limit: SORT._maxLimit + 1 // the plus one is to check if there are any more
+          },
             []
             , function (err, data) {
               if (err) {
@@ -635,46 +647,46 @@
           modalInstance.result.then(function (message) {
             if (message === 'yes') {
               var item = ContentHome.items[_index];
-                if (item.data.email && window.ENABLE_UNIQUE_EMAIL) {
-                    Buildfire[window.DB_PROVIDER].searchAndUpdate({email: item.data.email}, {$set: {deleted: 'true'}}, TAG_NAMES.PEOPLE, function (err, result) {
-                        Buildfire[window.DB_PROVIDER].search({filter: {'$json.email': item.data.email}}, TAG_NAMES.PEOPLE, function (err, result) {
-                            if (result) {
-                                for (var i = 0; i < result.length; i++) {
-                                    if (result[i].data && result[i].data.searchEngineDocumentId) {
-                                      buildfire.services.searchEngine.delete(
-                                        {
-                                          id: result[i].data.searchEngineDocumentId,
-                                          tag: TAG_NAMES.PEOPLE
-                                        }, 
-                                        () => {}
-                                      );
-                                    }
-                                    Buildfire[window.DB_PROVIDER].delete(result[i].id, TAG_NAMES.PEOPLE, function (err, result) {
-                                    });
-                                }
-                            }
-                            ContentHome.items.splice(_index, 1);
-                            $scope.$digest();
+              if (item.data.email && window.ENABLE_UNIQUE_EMAIL) {
+                Buildfire[window.DB_PROVIDER].searchAndUpdate({ email: item.data.email }, { $set: { deleted: 'true' } }, TAG_NAMES.PEOPLE, function (err, result) {
+                  Buildfire[window.DB_PROVIDER].search({ filter: { '$json.email': item.data.email } }, TAG_NAMES.PEOPLE, function (err, result) {
+                    if (result) {
+                      for (var i = 0; i < result.length; i++) {
+                        if (result[i].data && result[i].data.searchEngineDocumentId) {
+                          buildfire.services.searchEngine.delete(
+                            {
+                              id: result[i].data.searchEngineDocumentId,
+                              tag: TAG_NAMES.PEOPLE
+                            },
+                            () => { }
+                          );
+                        }
+                        Buildfire[window.DB_PROVIDER].delete(result[i].id, TAG_NAMES.PEOPLE, function (err, result) {
                         });
-                    });
-                }
-                else{
-                    if (item && item.data && item.data.searchEngineDocumentId) {
-                      buildfire.services.searchEngine.delete(
-                        {
-                          id: item.data.searchEngineDocumentId,
-                          tag: TAG_NAMES.PEOPLE
-                        }, 
-                        () => {}
-                      );
+                      }
                     }
-                    Buildfire[window.DB_PROVIDER].delete(item.id, TAG_NAMES.PEOPLE, function (err, result) {
-                        if (err)
-                            return;
-                        ContentHome.items.splice(_index, 1);
-                        $scope.$digest();
-                    });
+                    ContentHome.items.splice(_index, 1);
+                    $scope.$digest();
+                  });
+                });
+              }
+              else {
+                if (item && item.data && item.data.searchEngineDocumentId) {
+                  buildfire.services.searchEngine.delete(
+                    {
+                      id: item.data.searchEngineDocumentId,
+                      tag: TAG_NAMES.PEOPLE
+                    },
+                    () => { }
+                  );
                 }
+                Buildfire[window.DB_PROVIDER].delete(item.id, TAG_NAMES.PEOPLE, function (err, result) {
+                  if (err)
+                    return;
+                  ContentHome.items.splice(_index, 1);
+                  $scope.$digest();
+                });
+              }
             }
           }, function (data) {
             //do something on cancel
@@ -700,7 +712,7 @@
                     "$regex": fullName[0],
                     "$options": "i"
                   }
-                }, {"$json.lName": {"$regex": fullName[1], "$options": "i"}}]
+                }, { "$json.lName": { "$regex": fullName[1], "$options": "i" } }]
               };
             } else {
               fullName = value;
@@ -710,11 +722,11 @@
                     "$regex": fullName,
                     "$options": "i"
                   }
-                }, {"$json.lName": {"$regex": fullName, "$options": "i"}}]
+                }, { "$json.lName": { "$regex": fullName, "$options": "i" } }]
               };
             }
           } else {
-            ContentHome.searchOptions.filter = {"$json.fName": {"$regex": '/*'}};
+            ContentHome.searchOptions.filter = { "$json.fName": { "$regex": '/*' } };
           }
           ContentHome.loadMore('search');
         };

@@ -439,6 +439,9 @@
                                 { "$json.fName": { $regex: $scope.searchInput, $options: 'i' } },
                                 { "$json.lName": { $regex: $scope.searchInput, $options: 'i' } },
                                 { "$json.position": { $regex: $scope.searchInput, $options: 'i' } },
+                                { "$json.email": { $regex: $scope.searchInput, $options: 'i' } },
+                                { "$json.phone": { $regex: $scope.searchInput, $options: 'i' } },
+                                //{ "$json.bodyContent": { $regex: $scope.searchInput, $options: 'i' } },
                             ]
                         };
                         if (window.ENABLE_UNIQUE_EMAIL) {
@@ -448,7 +451,7 @@
                                     {'$json.deleted': {$ne: 'true'}}]
                             }];
                         }
-                    }else{
+                    } else {
                         if (window.ENABLE_UNIQUE_EMAIL) {
                             searchOptions.filter = {
                                 $or: [
