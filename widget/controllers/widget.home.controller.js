@@ -435,11 +435,16 @@
                     }
 
                     if ($scope.searchInput) {
+                        var searchInput = $scope.searchInput.split(/\s+/);
                         searchOptions.filter = {
                             $or: [
                                 { "$json.fName": { $regex: $scope.searchInput, $options: 'i' } },
                                 { "$json.lName": { $regex: $scope.searchInput, $options: 'i' } },
-                                { "$json.position": { $regex: $scope.searchInput, $options: 'i' } }
+                                { "$json.position": { $regex: $scope.searchInput, $options: 'i' } },
+                                { $and: [ 
+                                    {"$json.fName": { $regex: searchInput[0], $options: 'i' } }, 
+                                    { "$json.lName": { $regex: searchInput.length > 1 ? searchInput[1] : $scope.searchInput, $options: 'i' } }
+                                ]},
                             ]
                         };
                         if (window.ENABLE_UNIQUE_EMAIL) {
