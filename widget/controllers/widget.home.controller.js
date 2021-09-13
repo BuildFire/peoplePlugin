@@ -443,8 +443,9 @@
                                 { "$json.position": { $regex: $scope.searchInput, $options: 'i' } },
                                 { $and: [ 
                                     {"$json.fName": { $regex: searchInput[0], $options: 'i' } }, 
-                                    { "$json.lName": { $regex: searchInput.length > 1 ? searchInput[1] : $scope.searchInput, $options: 'i' } }
+                                    { "$json.lName": { $regex: searchInput.length > 1 ? searchInput[searchInput.length-1] : $scope.searchInput, $options: 'i' } }
                                 ]},
+
                             ]
                         };
                         if (window.ENABLE_UNIQUE_EMAIL) {
