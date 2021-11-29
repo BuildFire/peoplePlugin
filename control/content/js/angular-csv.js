@@ -158,4 +158,30 @@
                 }
             }
         })
+        .directive('fileReader', [function () {
+            return {
+                restrict: 'A',
+                scope: {
+                    result: "="
+                },
+                bindToController: true,
+                link: function (scope, element, attrs) {
+                    element.context.onchange = function (event) {
+                        var files = event.target.files; //FileList object
+                        for (var i = 0; i < files.length; i++) {
+                            var file = files[i];
+                            var picReader = new FileReader();
+                            picReader.addEventListener("load", function (event) {
+                                var textFile = event.target;
+                                scope.result = textFile.result;
+                                scope.$apply();
+                            });
+                            picReader.readAsText(file);
+                        }
+
+                    }
+
+                }
+            };
+        }])
 })(window.angular, window.URL, window.navigator);
