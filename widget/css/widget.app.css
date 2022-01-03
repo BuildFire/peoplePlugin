@@ -484,3 +484,7 @@ ol li{
   right: 10%;
   position: absolute;
 }
+
+.user-phone-and-email {
+  margin: 0 !important;
+}

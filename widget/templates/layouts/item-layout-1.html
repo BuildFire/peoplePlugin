@@ -15,9 +15,11 @@
 			<div class="copy">
 				<h5 class="margin-zero text-overlay">{{WidgetPeople.item.fName}} {{WidgetPeople.item.lName}}</h5>
 				<p class="margin-bottom-zero">{{WidgetPeople.item.position}}</p>
-				<p class="margin-bottom-zero" ng-show="WidgetPeople.item.email && !WidgetPeople.hideEmail">
+				<p class="blackTheme ellipsis user-phone-and-email" ng-show="WidgetPeople.item.email && !WidgetPeople.hideEmail">
 					<a ng-click="WidgetPeople.sendMail(WidgetPeople.item.email)">{{WidgetPeople.item.email}}</a>
-					<br><a ng-click="WidgetPeople.callPhone(WidgetPeople.item.phone)">{{WidgetPeople.item.phone}}</a>
+				</p>
+				<p class="blackTheme ellipsis user-phone-and-email" ng-show="WidgetPeople.item.phone">
+					<a ng-click="WidgetPeople.callPhone(WidgetPeople.item.phone)">{{WidgetPeople.item.phone}}</a>
 				</p>
 			</div>
 			<button ng-if="WidgetPeople.item.socialLinks.length" class="btn btn-primary btn-details btn-sm" ng-click="WidgetPeople.openLinks(WidgetPeople.item.socialLinks)">{{WidgetPeople.actionButtonText}}</button>
