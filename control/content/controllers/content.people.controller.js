@@ -91,6 +91,8 @@
               $or: [{ '$json.deleted': { $exists: false } },
               { '$json.deleted': { $ne: 'true' } }]
             }];
+            
+            filter['$json.__$Deleted'] = { $exists: false };
             Buildfire[window.DB_PROVIDER].search({ filter: filter }, TAG_NAMES.PEOPLE, function (err, result) {
               if (result && result.length > 0) {
                 for (var i = 0; i < result.length; i++) {
