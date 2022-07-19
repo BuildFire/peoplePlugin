@@ -465,6 +465,8 @@
                             };
                         }
                     }
+                    
+                    searchOptions.filter['$json.__$Deleted'] = { $exists: false };
 
                     Buildfire[window.DB_PROVIDER].search(searchOptions, TAG_NAMES.PEOPLE, function (err, result) {
                         console.log('-----------WidgetHome.loadMore-------------');  

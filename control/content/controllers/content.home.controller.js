@@ -365,6 +365,7 @@
                   {'$json.deleted': {$ne: 'true'}}]
           });
 
+          ContentHome.searchOptions.filter['$json.__$Deleted'] = { $exists: false };
           Buildfire[window.DB_PROVIDER].search(ContentHome.searchOptions, TAG_NAMES.PEOPLE, function (err, result) {
             if (err) {
               Buildfire.spinner.hide();
