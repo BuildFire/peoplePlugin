@@ -4,7 +4,8 @@
             <div class="people-bg">
                 <div class="people-holder">
                     <div class="people-media text-center" ng-if="WidgetPeople.item.topImage">
-                        <img class="" load-image="1x1" data-final-src="{{WidgetPeople.item.topImage}}" crop-width="140" crop-height="140" crop-type="crop">
+                        <img class="" load-image="1x1" data-final-src="{{WidgetPeople.item.topImage}}" crop-width="140"
+                            crop-height="140" crop-type="crop">
                     </div>
                     <div class="people-media text-center" ng-if="!WidgetPeople.item.topImage">
                         <img class="" src="../../../styles/media/holder-1x1.png">
@@ -12,22 +13,31 @@
                     <div class="people-info ellipsis">
                         <h5 class="ellipsis">{{WidgetPeople.item.fName}} {{WidgetPeople.item.lName}}</h5>
                         <p class="ellipsis caption margin-zero text-overlay">{{WidgetPeople.item.position}}</p>
-                        <p class="caption ellipsis text-overlay margin-bottom-five" ng-show="WidgetPeople.item.email && !WidgetPeople.hideEmail">
-                        <a ng-click="WidgetPeople.sendMail(WidgetPeople.item.email)">{{WidgetPeople.item.email}}</a></p>
+                        <p class="caption ellipsis text-overlay margin-bottom-five"
+                            ng-show="WidgetPeople.item.email && !WidgetPeople.hideEmail">
+                            <a ng-click="WidgetPeople.sendMail(WidgetPeople.item.email)">{{WidgetPeople.item.email}}</a>
+                        </p>
                         <p class="caption ellipsis margin-bottom-five">
-                        <a ng-click="WidgetPeople.callPhone(WidgetPeople.item.phone)">{{WidgetPeople.item.phone}}</a></p>
+                            <a
+                                ng-click="WidgetPeople.callPhone(WidgetPeople.item.phone)">{{WidgetPeople.item.phone}}</a>
+                        </p>
                         <!-- <a ng-if="WidgetPeople.item.socialLinks.length" class="icon icon-profile text-overlay" ng-click="WidgetPeople.openLinks(WidgetPeople.item.socialLinks)"></a> -->
-                        <button ng-if="WidgetPeople.item.socialLinks.length" class="btn btn-primary btn-details btn-sm" ng-click="WidgetPeople.openLinks(WidgetPeople.item.socialLinks)">{{WidgetPeople.actionButtonText}}</button>
-                        <!-- <button ng-if="WidgetPeople.enableShare" class="btn btn-primary btn-details btn-sm" ng-click="WidgetPeople.share(WidgetPeople.item)">{{share}}</button> -->
+
                     </div>
                 </div>
             </div>
         </div>
         <div class="padded">
             <p class="break-word text-overlay" ng-if='WidgetPeople.item.bodyContent'
-               ng-bind-html='WidgetPeople.safeHtml(WidgetPeople.item.bodyContent)'></p>
+                ng-bind-html='WidgetPeople.safeHtml(WidgetPeople.item.bodyContent)'></p>
 
             <p class="break-word text-overlay" ng-if='!WidgetPeople.item.bodyContent'></p>
         </div>
+    </div>
+    <div class="btn-container">
+        <button ng-if="WidgetPeople.item.socialLinks.length" class="wdg-btn btn-color-primary btn-halfWidth"
+            ng-click="WidgetPeople.openLinks(WidgetPeople.item.socialLinks)"><span
+                class="btn-label">{{WidgetPeople.actionButtonText}}</span></button>
+        <!-- <button ng-if="WidgetPeople.enableShare" class="btn btn-primary btn-details btn-sm" ng-click="WidgetPeople.share(WidgetPeople.item)">{{share}}</button> -->
     </div>
 </div>
