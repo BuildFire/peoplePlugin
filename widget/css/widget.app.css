@@ -359,9 +359,9 @@ p:empty {
 }
 
 .btn-color-primary {
-  border: 1px solid var(--bf-theme-backgroundy);
+  border: 0;
   background-color: var(--bf-theme-primary);
-  color: var(--bf-theme-background);
+  color: #fff;
 }
 
 .btn-halfWidth {
