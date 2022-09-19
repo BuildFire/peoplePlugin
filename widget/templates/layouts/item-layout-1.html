@@ -2,8 +2,9 @@
 	<div class="people-plugin layout1">
 		<div class="plugin-banner clearfix">
 			<div class="plugin-slider text-center">
-				<div  ng-if="WidgetPeople.item.topImage"  class="detail-img">
-					<img load-image="16x9" data-final-src="{{WidgetPeople.item.topImage}}" crop-width="400" crop-height="235" crop-type="crop">
+				<div ng-if="WidgetPeople.item.topImage" class="detail-img">
+					<img load-image="16x9" data-final-src="{{WidgetPeople.item.topImage}}" crop-width="400"
+						crop-height="235" crop-type="crop">
 					<img ng-if="!WidgetPeople.item.topImage" src="../../../styles/media/holder-2x1.png">
 				</div>
 				<!--<div ng-if="!WidgetPeople.item.topImage"  class="text-overlay" style="min-height: 200px">
@@ -15,20 +16,28 @@
 			<div class="copy">
 				<h5 class="margin-zero text-overlay">{{WidgetPeople.item.fName}} {{WidgetPeople.item.lName}}</h5>
 				<p class="margin-bottom-zero">{{WidgetPeople.item.position}}</p>
-				<p class="blackTheme ellipsis user-phone-and-email" ng-show="WidgetPeople.item.email && !WidgetPeople.hideEmail">
+				<p class="blackTheme ellipsis user-phone-and-email"
+					ng-show="WidgetPeople.item.email && !WidgetPeople.hideEmail">
 					<a ng-click="WidgetPeople.sendMail(WidgetPeople.item.email)">{{WidgetPeople.item.email}}</a>
 				</p>
 				<p class="blackTheme ellipsis user-phone-and-email" ng-show="WidgetPeople.item.phone">
 					<a ng-click="WidgetPeople.callPhone(WidgetPeople.item.phone)">{{WidgetPeople.item.phone}}</a>
 				</p>
 			</div>
-			<button ng-if="WidgetPeople.item.socialLinks.length" class="btn btn-primary btn-details btn-sm" ng-click="WidgetPeople.openLinks(WidgetPeople.item.socialLinks)">{{WidgetPeople.actionButtonText}}</button>
-			<!-- <button ng-if="WidgetPeople.enableShare" class="btn btn-primary btn-details btn-sm" ng-click="WidgetPeople.share(WidgetPeople.item)">{{share}}</button> -->
-			<!-- <a ng-if="WidgetPeople.item.socialLinks.length" class="icon icon-profile text-overlay" ng-click="WidgetPeople.openLinks(WidgetPeople.item.socialLinks)"></a> -->
 		</div>
 		<div class="padded">
-			<p class="break-word text-overlay" ng-if='WidgetPeople.item.bodyContent' ng-bind-html='WidgetPeople.safeHtml(WidgetPeople.item.bodyContent)'></p>
+			<p class="break-word text-overlay" ng-if='WidgetPeople.item.bodyContent'
+				ng-bind-html='WidgetPeople.safeHtml(WidgetPeople.item.bodyContent)'></p>
 			<p class="break-word" ng-if='!WidgetPeople.item.bodyContent'></p>
 		</div>
 	</div>
+	<div class="btn-container">
+		<button ng-if="WidgetPeople.item.socialLinks.length"
+		class="wdg-btn btn-color-primary btn-halfWidth"
+		ng-click="WidgetPeople.openLinks(WidgetPeople.item.socialLinks)">
+		<span class="btn-label">{{WidgetPeople.actionButtonText}}</span>
+	</button>
+	<!-- <button ng-if="WidgetPeople.enableShare" class="btn btn-primary btn-details btn-sm" ng-click="WidgetPeople.share(WidgetPeople.item)">{{share}}</button> -->
+	<!-- <a ng-if="WidgetPeople.item.socialLinks.length" class="icon icon-profile text-overlay" ng-click="WidgetPeople.openLinks(WidgetPeople.item.socialLinks)"></a> -->
+</div>
 </div>

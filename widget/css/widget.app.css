@@ -57,6 +57,10 @@ p:empty{
 	transform: scale(.1);
 	opacity: 0;
 	animation: load-in .2s ease-in .5s forwards;
+	-webkit-transform: scale(.1);
+	-moz-transform: scale(.1);
+	-ms-transform: scale(.1);
+	-o-transform: scale(.1);
 }
 .transparent-background{
     background-color: rgba(255, 255, 255, 0.1);
@@ -67,11 +71,11 @@ p:empty{
 @keyframes load-in {
 	0%{
 			transform: scale(.1);
-	}
+}
 	100%{
 			transform: scale(1);
 			opacity: 1;
-	}
+}
 }
 .plugin-slider .plugin-slide,
 .plugin-slider.owl-carousel .owl-stage-outer,
@@ -165,6 +169,10 @@ p:empty{
   left: .75rem;
   transform: translateY(-50%);
   pointer-events: none;
+  -webkit-transform: translateY(-50%);
+  -moz-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  -o-transform: translateY(-50%);
 }
 .search-clear{
   position: absolute;
@@ -174,6 +182,10 @@ p:empty{
   width: 2rem;
   height: 2rem;
   font-size: 1rem;
+  -webkit-transform: translateY(-50%);
+  -moz-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  -o-transform: translateY(-50%);
 }
 .search-list{
 	padding-top: 3.75rem;
@@ -260,8 +272,67 @@ p:empty{
 .layout4 .people-info{
   padding: 0 32px;
 }
+
 /* End Detail Item 4 ////////////////////////////////////////////////////////////////////////////// */
 
+/* item layouts Buttons  */
+.btn-container{
+  padding:0 1rem calc(1.5rem + env(safe-area-inset-bottom));
+  display: flex;
+  justify-content: center;
+  column-gap: 1rem;
+  position: sticky;
+  bottom: 0;
+  width: 100%;
+}
+
+.wdg-btn {
+  min-width: 4rem;
+  box-sizing: border-box;
+  border-radius: 4px;
+  cursor: pointer;
+  margin: 0;
+  outline: 0;
+  padding: 0;
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  vertical-align: middle;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  background-color: transparent;
+  -webkit-tap-highlight-color: transparent;
+  min-height: 2.5rem;
+  padding: 0.5rem 1rem;
+}
+.btn-color-primary {
+  border: 1px solid var(--bf-theme-backgroundy);
+  background-color: var( --bf-theme-primary);
+  color: var(--bf-theme-background);
+}
+.btn-halfWidth {
+  width: 50%;
+}
+
+.btn-label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color:inherit;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-decoration: none;
+}
+/* End  item layouts Buttons*/
+
+
+.people-plugin{
+  min-height: 90vh;
+}
 .people-plugin .people-info{
 	position:relative;
 }
