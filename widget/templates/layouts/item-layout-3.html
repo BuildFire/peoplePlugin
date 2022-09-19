@@ -18,10 +18,11 @@
                             <a ng-click="WidgetPeople.sendMail(WidgetPeople.item.email)">{{WidgetPeople.item.email}}</a>
                         </p>
                         <p class="caption ellipsis margin-bottom-five">
-                            <a ng-click="WidgetPeople.callPhone(WidgetPeople.item.phone)">{{WidgetPeople.item.phone}}</a>
+                            <a
+                                ng-click="WidgetPeople.callPhone(WidgetPeople.item.phone)">{{WidgetPeople.item.phone}}</a>
                         </p>
                         <!-- <a ng-if="WidgetPeople.item.socialLinks.length" class="icon icon-profile text-overlay" ng-click="WidgetPeople.openLinks(WidgetPeople.item.socialLinks)"></a> -->
-                  
+
                     </div>
                 </div>
             </div>
@@ -34,9 +35,9 @@
         </div>
     </div>
     <div class="btn-container">
-        <button ng-if="WidgetPeople.item.socialLinks.length"
-        class="wdg-btn btn-color-primary btn-halfWidth"
-        ng-click="WidgetPeople.openLinks(WidgetPeople.item.socialLinks)"><span class="btn-label">{{WidgetPeople.actionButtonText}}</span></button>
+        <button ng-if="WidgetPeople.item.socialLinks.length" class="wdg-btn btn-color-primary btn-halfWidth"
+            ng-click="WidgetPeople.openLinks(WidgetPeople.item.socialLinks)"><span
+                class="btn-label">{{WidgetPeople.actionButtonText}}</span></button>
         <!-- <button ng-if="WidgetPeople.enableShare" class="btn btn-primary btn-details btn-sm" ng-click="WidgetPeople.share(WidgetPeople.item)">{{share}}</button> -->
     </div>
 </div>
