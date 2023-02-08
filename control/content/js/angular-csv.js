@@ -81,7 +81,7 @@
                             }
                             items.push(item);
                         }
-                        return JSON.stringify(items).replace(/},/g, "},\r\n");
+                        return JSON.stringify(items);
                     },
                     jsonToCsv: function (objArray, options) {
                         var array;
