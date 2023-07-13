@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head lang="en">
     <meta charset="UTF-8">
     <!-- JS -->
@@ -16,7 +17,9 @@
     <script src="../../../../scripts/angular/ui-bootstrap.min.js"></script>
     <script src="../../../../scripts/angular/ng-infinite-scroll.custom.js"></script>
     <script src="../../../../scripts/buildfire/services/searchEngine/searchEngine.js"></script>
+    <script src="../../../../scripts/buildfire/components/aiStateSeeder/aiStateSeeder.js"></script>
     <!-- build:bundleJSFiles  -->
+    <script src="js/aiSeeder.js"></script>
     <script src="js/sortable.js"></script>
     <script src="app.js"></script>
     <script src="enums.js"></script>
@@ -37,9 +40,14 @@
     <!-- endbuild -->
     <link rel="stylesheet" href="../../../../styles/transitionAnimation.css">
 </head>
+
 <body>
-<div class="main_view">
-    <div class="content slide padding-content-top" ng-view=""></div>
-</div>
+    <div class="main_view">
+        <div class="content slide padding-content-top" ng-view="home"></div>
+    </div>
+    <script>
+        initAiStateSeeder();
+    </script>
 </body>
+
 </html>
