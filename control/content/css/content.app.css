@@ -331,3 +331,7 @@ html[buildfire] .d-item .btn-delete-icon:after {
 .draggable-list-view.has-btn.links-list .d-item.double-line .copy .pull-right {
     margin-top: -4px !important;
 }
+
+.slide {
+    position: relative !important;
+}
