@@ -19,7 +19,7 @@
     <script src="../../../../scripts/buildfire/services/searchEngine/searchEngine.js"></script>
     <script src="../../../../scripts/buildfire/components/aiStateSeeder/aiStateSeeder.js"></script>
     <!-- build:bundleJSFiles  -->
-    <script src="js/aiSeeder.js"></script>
+    <script src="js/aiStateSeeder.js"></script>
     <script src="js/sortable.js"></script>
     <script src="app.js"></script>
     <script src="enums.js"></script>
@@ -43,11 +43,8 @@
 
 <body>
     <div class="main_view">
-        <div class="content slide padding-content-top" ng-view="home"></div>
+        <div class="content  padding-content-top" ng-view="home"></div>
     </div>
-    <script>
-        initAiStateSeeder();
-    </script>
 </body>
 
 </html>

@@ -48,9 +48,11 @@
                     controllerAs: 'ContentHome',
                     controller: 'ContentHomeCtrl',
                     resolve: {
-                        PeopleInfo: ['$q', 'DB', 'COLLECTIONS', 'Location', function ($q, DB, COLLECTIONS, Location) {
+                        PeopleInfo: ['$q', 'DB', 'COLLECTIONS', 'Location','$rootScope', function ($q, DB, COLLECTIONS, Location, $rootScope) {
                             var deferred = $q.defer();
                             var PeopleInfo = new DB(COLLECTIONS.peopleInfo);
+                            var People = new DB(COLLECTIONS.people);
+                            $rootScope.peopleCollectionTag = People._tagName;
                             /*    var _bootstrap = function () {
                              PeopleInfo.save({
                              content: {
@@ -97,7 +99,9 @@
                                 function fail() {
                                     Location.goToHome();
                                 }
-                            );
+                            ).then(()=>{
+                                initAiStateSeeder.init(window.DB_PROVIDER,$rootScope.peopleCollectionTag);
+                            });
                             return deferred.promise;
                         }]
                     }
