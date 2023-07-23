@@ -40,6 +40,8 @@
             _limit: 10,
             _maxLimit: 19,
             _skip: 0
+        }).run(function(){
+            aiStateSeederManager.init();
         })
         .config(['$routeProvider', function ($routeProvider) {
             $routeProvider
@@ -48,11 +50,9 @@
                     controllerAs: 'ContentHome',
                     controller: 'ContentHomeCtrl',
                     resolve: {
-                        PeopleInfo: ['$q', 'DB', 'COLLECTIONS', 'Location','$rootScope', function ($q, DB, COLLECTIONS, Location, $rootScope) {
+                        PeopleInfo: ['$q', 'DB', 'COLLECTIONS', 'Location', function ($q, DB, COLLECTIONS, Location) {
                             var deferred = $q.defer();
                             var PeopleInfo = new DB(COLLECTIONS.peopleInfo);
-                            var People = new DB(COLLECTIONS.people);
-                            $rootScope.peopleCollectionTag = People._tagName;
                             /*    var _bootstrap = function () {
                              PeopleInfo.save({
                              content: {
@@ -99,9 +99,7 @@
                                 function fail() {
                                     Location.goToHome();
                                 }
-                            ).then(()=>{
-                                initAiStateSeeder.init(window.DB_PROVIDER,$rootScope.peopleCollectionTag);
-                            });
+                            );
                             return deferred.promise;
                         }]
                     }
