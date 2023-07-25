@@ -1,7 +1,7 @@
 {
   "author":"BuildFire"
   ,"pluginName":"People"
-  ,"pluginDescription":"The People plugin allows you to include directory-like information about the people within your organization with pictures, contact info, bios, and even embed images and videos. Keywords: directory"
+  ,"pluginDescription":"Centralized contact management & networking plugin for efficient communication."
   ,"supportEmail":"support@buildfire.com"
   ,"supportSite":"http://learn.appdocumentation.com/plugin-tutorials/people-plugin-tutorial/"
   ,"pluginIcon":"icon.png"
@@ -21,5 +21,16 @@
 
   },
       "features" : [],
-      "languages" : ["en"]
+      "languages" : ["en"],
+			"media": [
+				{ "type": "image-resource", "path": "1-Plugin.png" },
+				{ "type": "image-resource", "path": "2-Benefits.png" },
+				{ "type": "image-resource", "path": "3-Use-Cases.png" },
+				{ "type": "image-resource", "path": "4-Content-Tab.png" },
+				{ "type": "image-resource", "path": "5-Design-Tab.png" },
+        {
+          "type": "youtube-video",
+          "path": "https://www.youtube.com/watch?v=nQXONB5h1Wg"
+        }
+			]
 }
