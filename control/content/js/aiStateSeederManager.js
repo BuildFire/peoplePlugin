@@ -1,43 +1,32 @@
-const jsonTemplate = [
-    {
-        fName: '',
-        lName: '',
-        phone: '',
-        topImage: '',
-        bodyContent: '',
-        position: '',
-        email: '',
-    },
-];
-
 const aiStateSeederManager = {
     aiStateSeeder: null,
     tagCollectionName: 'people',
     controllers: null,
-    generateOptions: {
-        userMessage:
-            'Generate a sample list of contacts for people working on IT company',
-        systemMessage:
-            'Maximum size should be 5 contacts, each contact should have a first name, last name, phone number, avatar in png format, bio, position, email. Use dicebear.com to generate a useable avatars urls. bio as html content',
-        jsonTemplate: jsonTemplate,
-    },
-
-    importOptions: {
-        jsonTemplate: jsonTemplate,
-        sampleCsv:
-            'Jane, Smith, 123-456-7890, https://avatars.dicebear.com/api/avataaars/jane-smith.png?mouth=smile&eyebrows=defaultNatural&eyes=default,<p>Jane Smith is a marketing specialist with expertise in digital marketing strategies.</p>,Marketing Specialist,Jane.Smith@example.com\n\r John, Doe, 123-456-7890, https://avatars.dicebear.com/api/avataaars/john-doe.png?mouth=smile&eyebrows=defaultNatural&eyes=default,<p>John Doe is a software engineer with 5 years of experience in web development.</p>,Software Engineer,john.doe@example.com',
-        systemMessage: `Maximum size should be 5, fName is first , last name is lname, phone is random phone numbers, topImage is a URL`,
-    },
+    jsonTemplate: [
+        {
+            fName: '',
+            lName: '',
+            phone: '',
+            topImage: '',
+            bodyContent: '',
+            position: '',
+            email: '',
+        },
+    ],
     init() {
-        let angular = window.angular;
+        const angular = window.angular;
 
         if (angular && angular.module) {
-            if (angular.module('peopleEnums')) {
+            const peopleEnumsModule = angular.module('peopleEnums');
+            const peopleServicesModule = angular.module('peopleServices');
+
+            if (peopleEnumsModule) {
                 this.tagCollectionName = angular
                     .injector(['ng', 'peopleEnums'])
                     .get('COLLECTIONS').people;
             }
-            if (angular.module('peopleServices')) {
+
+            if (peopleServicesModule) {
                 const dbService = angular
                     .injector(['ng', 'peopleServices'])
                     .get('DB');
@@ -46,9 +35,23 @@ const aiStateSeederManager = {
         }
 
         this.aiStateSeeder = new buildfire.components.aiStateSeeder({
-            generateOptions: this.generateOptions,
-            importOptions: this.importOptions,
-        }).smartShowEmptyState(null, this._handleInsertion.bind(this));
+            generateOptions: {
+                userMessage:
+                    'Generate a sample list of contacts for people working on IT company',
+                systemMessage:
+                    'Each contact should have a first name, last name, phone number, avatar in png format, bio, position, email. Use dicebear.com to generate a useable avatars urls. bio as html content',
+                jsonTemplate: this.jsonTemplate,
+                callback: this._handleGenerate.bind(this),
+            },
+
+            importOptions: {
+                jsonTemplate: this.jsonTemplate,
+                sampleCSV:
+                    'Jane, Smith, 123-456-7890, https://avatars.dicebear.com/api/avataaars/jane-smith.png?mouth=smile&eyebrows=defaultNatural&eyes=default,<p>Jane Smith is a marketing specialist with expertise in digital marketing strategies.</p>,Marketing Specialist,Jane.Smith@example.com\n\r John, Doe, 123-456-7890, https://avatars.dicebear.com/api/avataaars/john-doe.png?mouth=smile&eyebrows=defaultNatural&eyes=default,<p>John Doe is a software engineer with 5 years of experience in web development.</p>,Software Engineer,john.doe@example.com',
+                systemMessage: `fName is first , last name is lname, phone is random phone numbers, topImage is a URL`,
+                callback: this._handleImport.bind(this),
+            },
+        }).smartShowEmptyState(null);
     },
 
     _bulkDelete() {
@@ -68,23 +71,48 @@ const aiStateSeederManager = {
         });
     },
 
-    _handleInsertion(err, data) {
-        if (
-            err ||
-            !data ||
-            typeof data !== 'object' ||
-            !Object.keys(data).length
-        ) {
-            return console.error(err);
+    _handleGenerate(err, data) {
+        if (!this._isValidObject(data)) {
+            console.error(err || 'Invalid data received');
+            return;
         }
-        let list = Object.values(data)[0];
-        if (!Array.isArray(list)) {
-            return console.error('The list must be an array');
+
+        if (!this._isValidArray(data)) {
+            console.error('The list must be an array');
+            return;
         }
 
         data.data = this.addQueryParam(data.data);
 
-        if (this.aiStateSeeder.requestType === 'generate') {
+        this._bulkDelete()
+            .then((res) => {
+                if (res) {
+                    this.controllers
+                        .insert(data.data)
+                        .then(() => {
+                            window.updateContentHomeItems(data.data);
+                            this.aiStateSeeder.requestResult.complete();
+                        })
+                        .catch((err) => console.error(err));
+                }
+            })
+            .catch((err) => console.error(err));
+    },
+
+    _handleImport(err, data) {
+        if (!this._isValidObject(data)) {
+            console.error(err || 'Invalid data received');
+            return;
+        }
+
+        if (!this._isValidArray(data)) {
+            console.error('The list must be an array');
+            return;
+        }
+
+        data.data = this.addQueryParam(data.data);
+
+        if (this.aiStateSeeder.requestResult.resetData) {
             this._bulkDelete()
                 .then((res) => {
                     if (res) {
@@ -98,7 +126,7 @@ const aiStateSeederManager = {
                     }
                 })
                 .catch((err) => console.error(err));
-        } else if (this.aiStateSeeder.requestType === 'import') {
+        } else {
             this.controllers
                 .insert(data.data)
                 .then(() => {
@@ -108,19 +136,28 @@ const aiStateSeederManager = {
                 .catch((err) => console.error(err));
         }
     },
+
     addQueryParam(items) {
-        let modifiedArray = [];
-        let queryParams = [
+        const queryParams = [
             'mouth=smile',
             'eyebrows=defaultNatural',
             'eyes=default',
         ];
-        modifiedArray = items.map((item) => {
+
+        return items.map((item) => {
             item.topImage = item.topImage.includes('?')
                 ? item.topImage + '&' + queryParams.join('&')
                 : item.topImage + '?' + queryParams.join('&');
             return item;
         });
-        return modifiedArray;
+    },
+
+    _isValidObject(data) {
+        return data && typeof data === 'object' && Object.keys(data).length > 0;
+    },
+
+    _isValidArray(data) {
+        const list = Object.values(data)[0];
+        return Array.isArray(list);
     },
 };
