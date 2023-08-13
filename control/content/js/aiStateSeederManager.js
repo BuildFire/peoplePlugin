@@ -37,7 +37,7 @@ const aiStateSeederManager = {
         this.aiStateSeeder = new buildfire.components.aiStateSeeder({
             generateOptions: {
                 userMessage:
-                    'Generate a sample list of contacts for people working on IT company',
+                    'Generate a sample list of contacts for people working on [business-type]',
                 systemMessage:
                     'Each contact should have a first name, last name, phone number, avatar in png format, bio, position, email. Use dicebear.com to generate a useable avatars urls. bio as html content',
                 jsonTemplate: this.jsonTemplate,
