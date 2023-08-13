@@ -39,7 +39,7 @@ const aiStateSeederManager = {
                 userMessage:
                     'Generate a sample list of contacts for people working on [business-type]',
                 systemMessage:
-                    'Each contact should have a first name, last name, phone number, avatar in png format, bio, position, email. Use dicebear.com to generate a useable avatars urls. bio as html content',
+                    'Each contact should have a first name, last name, phone number, avatar in png format, bio, position, email. Use https://avatars.dicebear.com/api/avataaars/ to generate a useable avatars urls. bio as html content',
                 jsonTemplate: this.jsonTemplate,
                 callback: this._handleGenerate.bind(this),
             },
