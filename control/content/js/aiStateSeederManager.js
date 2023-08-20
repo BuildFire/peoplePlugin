@@ -37,7 +37,7 @@ const aiStateSeederManager = {
         this.aiStateSeeder = new buildfire.components.aiStateSeeder({
             generateOptions: {
                 userMessage:
-                    'Generate a sample list of contacts for people working on [business-type]',
+                    'Generate a sample list of contacts for people working in the field [business-type]',
                 systemMessage:
                     'Each contact should have a first name, last name, phone number, avatar in png format, bio, position, email. Use https://avatars.dicebear.com/api/avataaars/ to generate a useable avatars urls. bio as html content',
                 jsonTemplate: this.jsonTemplate,
@@ -47,7 +47,7 @@ const aiStateSeederManager = {
             importOptions: {
                 jsonTemplate: this.jsonTemplate,
                 sampleCSV:
-                    'Jane, Smith, 123-456-7890, https://avatars.dicebear.com/api/avataaars/jane-smith.png?mouth=smile&eyebrows=defaultNatural&eyes=default,<p>Jane Smith is a marketing specialist with expertise in digital marketing strategies.</p>,Marketing Specialist,Jane.Smith@example.com\n\r John, Doe, 123-456-7890, https://avatars.dicebear.com/api/avataaars/john-doe.png?mouth=smile&eyebrows=defaultNatural&eyes=default,<p>John Doe is a software engineer with 5 years of experience in web development.</p>,Software Engineer,john.doe@example.com',
+                    'Jane, Smith, 123-456-7890, https://avatars.dicebear.com/api/avataaars/jane-smith.png?mouth=smile&eyebrows=defaultNatural&eyes=default,<p>Jane Smith is a marketing specialist with expertise in digital marketing strategies.</p>,Marketing Specialist,Jane.Smith@example.com\nJohn, Doe, 123-456-7890, https://avatars.dicebear.com/api/avataaars/john-doe.png?mouth=smile&eyebrows=defaultNatural&eyes=default,<p>John Doe is a software engineer with 5 years of experience in web development.</p>,Software Engineer,john.doe@example.com',
                 systemMessage: `fName is first , last name is lname, phone is random phone numbers, topImage is a URL`,
                 callback: this._handleImport.bind(this),
             },
