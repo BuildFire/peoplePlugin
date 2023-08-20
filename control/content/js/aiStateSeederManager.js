@@ -72,25 +72,33 @@ const aiStateSeederManager = {
     },
 
     _handleGenerate(err, data) {
-        if (!this._isValidObject(data)) {
+        if (err || !this._isValidObject(data)) {
             console.error(err || 'Invalid data received');
             return;
         }
 
-        if (!this._isValidArray(data)) {
-            console.error('The list must be an array');
+        let list = Object.values(data)[0];
+        if (!Array.isArray(list)) {
             return;
         }
 
-        data.data = this.addQueryParam(data.data);
+        list = this.addQueryParam(list);
+        list = this._applyDefaults(list);
+
+        if (!list.length) {
+            return buildfire.dialog.toast({
+                message: 'Bad AI request, please try changing your request.',
+                type: 'danger',
+            });
+        }
 
         this._bulkDelete()
             .then((res) => {
                 if (res) {
                     this.controllers
-                        .insert(data.data)
+                        .insert(list)
                         .then(() => {
-                            window.updateContentHomeItems(data.data);
+                            window.updateContentHomeItems(list);
                             this.aiStateSeeder.requestResult.complete();
                         })
                         .catch((err) => console.error(err));
@@ -100,26 +108,34 @@ const aiStateSeederManager = {
     },
 
     _handleImport(err, data) {
-        if (!this._isValidObject(data)) {
+        if (err || !this._isValidObject(data)) {
             console.error(err || 'Invalid data received');
             return;
         }
 
-        if (!this._isValidArray(data)) {
-            console.error('The list must be an array');
+        let list = Object.values(data)[0];
+        if (!Array.isArray(list)) {
             return;
         }
 
-        data.data = this.addQueryParam(data.data);
+        list = this.addQueryParam(list);
+        list = this._applyDefaults(list);
+
+        if (!list.length) {
+            return buildfire.dialog.toast({
+                message: 'Bad AI request, please try changing your request.',
+                type: 'danger',
+            });
+        }
 
         if (this.aiStateSeeder.requestResult.resetData) {
             this._bulkDelete()
                 .then((res) => {
                     if (res) {
                         this.controllers
-                            .insert(data.data)
+                            .insert(list)
                             .then(() => {
-                                window.updateContentHomeItems(data.data);
+                                window.updateContentHomeItems(list);
                                 this.aiStateSeeder.requestResult.complete();
                             })
                             .catch((err) => console.error(err));
@@ -128,9 +144,9 @@ const aiStateSeederManager = {
                 .catch((err) => console.error(err));
         } else {
             this.controllers
-                .insert(data.data)
+                .insert(list)
                 .then(() => {
-                    window.updateContentHomeItems(data.data);
+                    window.updateContentHomeItems(list);
                     this.aiStateSeeder.requestResult.complete();
                 })
                 .catch((err) => console.error(err));
@@ -142,12 +158,16 @@ const aiStateSeederManager = {
             'mouth=smile',
             'eyebrows=defaultNatural',
             'eyes=default',
+            'clothing=collarAndSweater',
+            'facialHairProbability=0'
         ];
 
         return items.map((item) => {
-            item.topImage = item.topImage.includes('?')
-                ? item.topImage + '&' + queryParams.join('&')
-                : item.topImage + '?' + queryParams.join('&');
+            if(item.topImage){
+                item.topImage = item.topImage.includes('?')
+                    ? item.topImage + '&' + queryParams.join('&')
+                    : item.topImage + '?' + queryParams.join('&');
+            }
             return item;
         });
     },
@@ -156,8 +176,19 @@ const aiStateSeederManager = {
         return data && typeof data === 'object' && Object.keys(data).length > 0;
     },
 
-    _isValidArray(data) {
-        const list = Object.values(data)[0];
-        return Array.isArray(list);
+    _applyDefaults(list) {
+        return list
+            .map((item) => {
+                item.location = item.location || 'N/A';
+                item.description = item.description || 'N/A';
+                item.fName = item.fName || 'N/A';
+                item.lName = item.lName || '';
+                item.phone = item.phone || 'N/A';
+                item.topImage = item.topImage || 'https://avatars.dicebear.com/api/avataaars/john-doe.png?mouth=smile&eyebrows=defaultNatural&eyes=default';
+                item.bodyContent = item.bodyContent || 'N/A';
+                item.position = item.position || 'N/A';
+                item.email = item.email || 'N/A';
+                return item;
+            });
     },
 };
