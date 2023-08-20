@@ -184,7 +184,7 @@ const aiStateSeederManager = {
                 item.fName = item.fName || 'N/A';
                 item.lName = item.lName || '';
                 item.phone = item.phone || 'N/A';
-                item.topImage = item.topImage || 'https://avatars.dicebear.com/api/avataaars/john-doe.png?mouth=smile&eyebrows=defaultNatural&eyes=default';
+                item.topImage = item.topImage || `https://api.dicebear.com/6.x/initials/png?seed=${item.fName}%20${item.lName}&backgroundColor=808080`;
                 item.bodyContent = item.bodyContent || 'N/A';
                 item.position = item.position || 'N/A';
                 item.email = item.email || 'N/A';
