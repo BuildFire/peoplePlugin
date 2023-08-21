@@ -40,6 +40,8 @@
             _limit: 10,
             _maxLimit: 19,
             _skip: 0
+        }).run(function(){
+            aiStateSeederManager.init();
         })
         .config(['$routeProvider', function ($routeProvider) {
             $routeProvider

@@ -813,6 +813,21 @@
         $scope.$watch(function () {
           return ContentHome.data;
         }, saveDataWithDelay, true);
-
+        
+        window.updateContentHomeItems = () => {
+          Buildfire[window.DB_PROVIDER].search(ContentHome.searchOptions, TAG_NAMES.PEOPLE, function (err, result) {
+            if (err) {
+              Buildfire.spinner.hide();
+              return console.error('-----------err in getting list-------------', err);
+            }
+            if (result.length <= SORT._limit) {// to indicate there are more
+              ContentHome.noMore = true;
+              Buildfire.spinner.hide();
+            }
+            ContentHome.items = result;
+            Buildfire.spinner.hide();
+            $scope.$digest();
+          });
+        }
       }]);
 })(window.angular, window.buildfire);
