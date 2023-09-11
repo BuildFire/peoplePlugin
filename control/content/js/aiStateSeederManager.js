@@ -179,7 +179,7 @@ const aiStateSeederManager = {
 
     _applyDefaults(list) {
         return list
-            .map((item) => {
+            .map((item, idx) => {
                 item.location = item.location || 'N/A';
                 item.description = item.description || 'N/A';
                 item.fName = item.fName || 'N/A';
@@ -189,7 +189,7 @@ const aiStateSeederManager = {
                 item.bodyContent = item.bodyContent || 'N/A';
                 item.position = item.position || 'N/A';
                 item.email = item.email || 'N/A';
-                item.rank = item.rank || 999;
+                item.rank = item.rank || 999 + idx;
                 return item;
             });
     },
