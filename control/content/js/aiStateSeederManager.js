@@ -11,6 +11,7 @@ const aiStateSeederManager = {
             bodyContent: '',
             position: '',
             email: '',
+            rank: 0,
         },
     ],
     init() {
@@ -39,7 +40,7 @@ const aiStateSeederManager = {
                 userMessage:
                     'Generate a sample list of contacts for people working in the field of [business-type]',
                 systemMessage:
-                    'Each contact should have a first name, last name, phone number, avatar in png format, bio, position, and email. Use https://avatars.dicebear.com/api/avataaars/ to generate useable avatar URLs, bio as HTML content, and for first name and last name use gender-neutral names',
+                    'Each contact should have a first name, last name, phone number, avatar in png format, bio, position, rank is item order number starting from zero, and email. Use https://avatars.dicebear.com/api/avataaars/ to generate useable avatar URLs, bio as HTML content, and for first name and last name use gender-neutral names, rank must be type number',
                 jsonTemplate: this.jsonTemplate,
                 callback: this._handleGenerate.bind(this),
             },
@@ -178,7 +179,7 @@ const aiStateSeederManager = {
 
     _applyDefaults(list) {
         return list
-            .map((item) => {
+            .map((item, idx) => {
                 item.location = item.location || 'N/A';
                 item.description = item.description || 'N/A';
                 item.fName = item.fName || 'N/A';
@@ -188,6 +189,7 @@ const aiStateSeederManager = {
                 item.bodyContent = item.bodyContent || 'N/A';
                 item.position = item.position || 'N/A';
                 item.email = item.email || 'N/A';
+                item.rank = item.rank || 999 + idx;
                 return item;
             });
     },
