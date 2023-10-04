@@ -141,15 +141,19 @@
                 }
             };
         }])
-        .factory('Location', [function () {
+        .factory('Location', ['$timeout', '$location', function ($timeout, $location) {
             var _location = window.location;
             return {
                 goTo: function (path) {
-                    _location.href = path;
+                    $timeout(() => {
+                        $location.path(path);
+                    });
                 },
                 goToHome: function () {
-                    _location.href = _location.href.substr(0, _location.href.indexOf('#'));
-                }
+                    $timeout(() => {
+                        $location.path('/');
+                    });
+                },
             };
         }])
         .factory('RankOfLastItem', [function () {
@@ -183,7 +187,7 @@
                 console.log(msg.type, window.location.href, msg.id);
                 switch (msg.type) {
                     case 'OpenItem':
-                        Location.goTo("#/people/" + msg.id);
+                        Location.goTo("people/" + msg.id);
                         break;
                     default:
                         Buildfire.history.pop();
