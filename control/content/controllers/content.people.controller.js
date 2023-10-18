@@ -12,7 +12,7 @@
         ContentPeople.linksSortableOptions = {
           handle: '> .cursor-grab'
         };
-        
+
         var _data = {
           email: '',
           topImage: '',
@@ -30,19 +30,19 @@
 
         $scope.draft_email = '';
 
-        const registerDeeplinkData = (name, id, imageUrl, callback) => {	
-          const recordData = {	
-            name,	
-            deeplinkData: { id },	
-            id,	
-            imageUrl,	
-          };	
+        const registerDeeplinkData = (name, id, imageUrl, callback) => {
+          const recordData = {
+            name,
+            deeplinkData: { id },
+            id,
+            imageUrl,
+          };
 
-          buildfire.deeplink.registerDeeplink(recordData, (err, result) => {	
-            if (err) console.error(err);	
+          buildfire.deeplink.registerDeeplink(recordData, (err, result) => {
+            if (err) console.error(err);
             if(callback) callback();
-          });	
-        };	
+          });
+        };
 
         //Scroll current view to top when page loaded.
         buildfire.navigation.scrollTop();
@@ -51,12 +51,17 @@
           data: angular.copy(_data)
         };
 
-        function myCustomURLConverter(url, node, on_save, name) {
-          if (!/^https?:\/\//i.test(url)) {
-            return "https://" + url.replace("//", "");
-          }
-          else return url;
-        }
+		function myCustomURLConverter(url) {
+			if (url && !/^https?:\/\//i.test(url)) {
+				const parsedURL = new URL(url);
+
+				if (!parsedURL.protocol) {
+					return "https://" + url.replace("//", "");
+				}
+			}
+
+			return url;
+		}
 
         ContentPeople.bodyContentWYSIWYGOptions = {
           plugins: 'advlist autolink link image lists charmap print preview',
@@ -91,7 +96,7 @@
               $or: [{ '$json.deleted': { $exists: false } },
               { '$json.deleted': { $ne: 'true' } }]
             }];
-            
+
             filter['$json.__$Deleted'] = { $exists: false };
             Buildfire[window.DB_PROVIDER].search({ filter: filter }, TAG_NAMES.PEOPLE, function (err, result) {
               if (result && result.length > 0) {
@@ -114,8 +119,8 @@
         }
 
         /*On click button done it redirects to home*/
-        ContentPeople.done = function () {          
-          if (ContentPeople.item && ContentPeople.item.id && ContentPeople.item.data) {	
+        ContentPeople.done = function () {
+          if (ContentPeople.item && ContentPeople.item.id && ContentPeople.item.data) {
             if (!$scope.$$phase) $scope.$digest();
 
             let name = `${ContentPeople.item.data.fName} ${ContentPeople.item.data.lName}`;
@@ -126,7 +131,7 @@
               buildfire.messaging.sendMessageToWidget({ type: "reload" });
               Buildfire.history.pop();
               Location.goToHome();
-            });	
+            });
           }
         };
 
@@ -213,7 +218,7 @@
               }
 
               let name = `${data.data.fName} ${data.data.lName}`;
-  
+
               registerDeeplinkData(name, data.id, data.data.topImage, () => {
                 RankOfLastItem.setRank(_rankOfLastItem);
                 item.id = ContentPeople.item.id = data.id;
@@ -222,7 +227,7 @@
                 updateMasterItem(item);
                 ContentPeople.item.data.deepLinkUrl = Buildfire.deeplink.createLink({ id: data.id });
                 buildfire.services.searchEngine.update({
-                  ...searchEngineDocument, 
+                  ...searchEngineDocument,
                   tag: TAG_NAMES.PEOPLE,
                   data: {id: data.id }
                 }, () => {
