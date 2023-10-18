@@ -51,17 +51,17 @@
           data: angular.copy(_data)
         };
 
-		function myCustomURLConverter(url) {
-			if (url && !/^https?:\/\//i.test(url)) {
-				const parsedURL = new URL(url);
+        function myCustomURLConverter(url) {
+          if (url && !/^https?:\/\//i.test(url)) {
+            const parsedURL = new URL(url);
 
-				if (!parsedURL.protocol) {
-					return "https://" + url.replace("//", "");
-				}
-			}
+            if (!parsedURL.protocol) {
+              return "https://" + url.replace("//", "");
+            }
+          }
 
-			return url;
-		}
+          return url;
+        }
 
         ContentPeople.bodyContentWYSIWYGOptions = {
           plugins: 'advlist autolink link image lists charmap print preview',
