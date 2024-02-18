@@ -553,7 +553,7 @@
               filter: {"$json.fName": {"$regex": '/*'}},
               skip: 0,
               limit: SORT._maxLimit + 1, // the plus one is to check if there are any more
-              sort: {"rank": 1}
+              sort: {fName: 1, lName: 1, email: 1, dateCreated: 1} // since there is no required field, we are sorting based on all fields
             },
             []
             , function (err, data) {
