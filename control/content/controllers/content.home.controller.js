@@ -165,6 +165,8 @@
   
               if (!parsedURL.protocol) {
                 return "https://" + url.replace("//", "");
+              } else {
+                return url;
               }
             } catch (e) {
               return url;
