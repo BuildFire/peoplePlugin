@@ -160,10 +160,14 @@
 
         function myCustomURLConverter(url) {
           if (url && !/^https?:\/\//i.test(url)) {
-            const parsedURL = new URL(url);
-
-            if (!parsedURL.protocol) {
-              return "https://" + url.replace("//", "");
+            try {
+              const parsedURL = new URL(url);
+  
+              if (!parsedURL.protocol) {
+                return "https://" + url.replace("//", "");
+              }
+            } catch (e) {
+              return url;
             }
           }
 
