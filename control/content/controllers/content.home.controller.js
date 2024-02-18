@@ -546,7 +546,8 @@
           getRecords({
               filter: {"$json.fName": {"$regex": '/*'}},
               skip: 0,
-              limit: SORT._maxLimit + 1 // the plus one is to check if there are any more
+              limit: SORT._maxLimit + 1, // the plus one is to check if there are any more
+              sort: {"rank": 1}
             },
             []
             , function (err, data) {
