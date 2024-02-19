@@ -273,8 +273,10 @@
               },
               (err, response) => {
                 if (err) {
+                  ContentPeople.isNewItemInserted = false;
                   $scope.savingPerson = false;
                   if (!$scope.$$phase) $scope.$digest();
+                  return;
                 }
                 insert(response);
               }

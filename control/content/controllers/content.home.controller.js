@@ -548,10 +548,8 @@
          */
         ContentHome.exportCSV = function () {
           getRecords({
-              filter: {"$json.fName": {"$regex": '/*'}},
               skip: 0,
               limit: SORT._maxLimit + 1, // the plus one is to check if there are any more
-              sort: {fName: 1, lName: 1, email: 1, dateCreated: 1} // since there is no required field, we are sorting based on all fields
             },
             []
             , function (err, data) {
@@ -591,7 +589,9 @@
          * @param callback
          */
         function getRecords(searchOption, records, callback) {
-          console.log("Data length", records.length);
+          searchOption.filter = {
+            "$json.searchEngineDocumentId": { "$nin" : records.map(_record=> _record.data.searchEngineDocumentId)}
+          }
           Buildfire[window.DB_PROVIDER].search(searchOption, TAG_NAMES.PEOPLE, function (err, result) {
             if (err) {
               console.error('-----------err in getting list-------------', err);
