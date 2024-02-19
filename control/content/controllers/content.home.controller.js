@@ -549,7 +549,7 @@
         ContentHome.exportCSV = function () {
           getRecords({
               skip: 0,
-              limit: SORT._maxLimit + 1, // the plus one is to check if there are any more
+              limit: SORT._maxLimit, // the plus one is to check if there are any more
             },
             []
             , function (err, data) {
@@ -597,13 +597,11 @@
               console.error('-----------err in getting list-------------', err);
               return callback(err, []);
             }
-            if (result.length <= SORT._maxLimit) {// to indicate there are more
+            if (result.length < SORT._maxLimit) {// to indicate there are more
               records = records.concat(result);
               return callback(null, records);
             }
             else {
-              result.pop();
-              searchOption.skip = searchOption.skip + SORT._maxLimit;
               records = records.concat(result);
               return getRecords(searchOption, records, callback);
             }
