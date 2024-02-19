@@ -549,7 +549,7 @@
         ContentHome.exportCSV = function () {
           getRecords({
               skip: 0,
-              limit: SORT._maxLimit, // the plus one is to check if there are any more
+              limit: SORT._maxLimit,
             },
             []
             , function (err, data) {
