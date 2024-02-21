@@ -160,10 +160,14 @@
 
         function myCustomURLConverter(url) {
           if (url && !/^https?:\/\//i.test(url)) {
-            const parsedURL = new URL(url);
-
-            if (!parsedURL.protocol) {
-              return "https://" + url.replace("//", "");
+            try {
+              const parsedURL = new URL(url);
+  
+              if (!parsedURL.protocol) {
+                return "https://" + url.replace("//", "");
+              }
+            } catch (e) {
+              return url;
             }
           }
 
@@ -544,9 +548,8 @@
          */
         ContentHome.exportCSV = function () {
           getRecords({
-              filter: {"$json.fName": {"$regex": '/*'}},
               skip: 0,
-              limit: SORT._maxLimit + 1 // the plus one is to check if there are any more
+              limit: SORT._maxLimit,
             },
             []
             , function (err, data) {
@@ -586,19 +589,19 @@
          * @param callback
          */
         function getRecords(searchOption, records, callback) {
-          console.log("Data length", records.length);
+          searchOption.filter = {
+            "$json.searchEngineDocumentId": { "$nin" : records.map(_record=> _record.data.searchEngineDocumentId)}
+          }
           Buildfire[window.DB_PROVIDER].search(searchOption, TAG_NAMES.PEOPLE, function (err, result) {
             if (err) {
               console.error('-----------err in getting list-------------', err);
               return callback(err, []);
             }
-            if (result.length <= SORT._maxLimit) {// to indicate there are more
+            if (result.length < SORT._maxLimit) {// to indicate there are more
               records = records.concat(result);
               return callback(null, records);
             }
             else {
-              result.pop();
-              searchOption.skip = searchOption.skip + SORT._maxLimit;
               records = records.concat(result);
               return getRecords(searchOption, records, callback);
             }
