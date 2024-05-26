@@ -40,7 +40,7 @@ const aiStateSeederManager = {
                 userMessage:
                     'Generate a sample list of contacts for people working in the field of [business-type]',
                 systemMessage:
-                    'Each contact should have a first name, last name, phone number, avatar in png format, bio, position, rank is item order number starting from zero, and email. Use https://avatars.dicebear.com/api/avataaars/ to generate useable avatar URLs, bio as HTML content, and for first name and last name use gender-neutral names, rank must be type number',
+                    'Each contact should have a first name, last name, phone number, avatar in png format, bio, position, rank is item order number starting from zero, and email. Use https://api.dicebear.com/8.x/avataaars/png to generate useable avatar URLs, bio as HTML content, and for first name and last name use gender-neutral names, rank must be type number',
                 jsonTemplate: this.jsonTemplate,
                 callback: this._handleGenerate.bind(this),
             },
@@ -48,7 +48,7 @@ const aiStateSeederManager = {
             importOptions: {
                 jsonTemplate: this.jsonTemplate,
                 sampleCSV:
-                    'Jane, Smith, 123-456-7890, https://avatars.dicebear.com/api/avataaars/jane-smith.png?mouth=smile&eyebrows=defaultNatural&eyes=default,<p>Jane Smith is a marketing specialist with expertise in digital marketing strategies.</p>,Marketing Specialist,Jane.Smith@example.com\nJohn, Doe, 123-456-7890, https://avatars.dicebear.com/api/avataaars/john-doe.png?mouth=smile&eyebrows=defaultNatural&eyes=default,<p>John Doe is a software engineer with 5 years of experience in web development.</p>,Software Engineer,john.doe@example.com',
+                    'Jane, Smith, 123-456-7890, https://api.dicebear.com/8.x/avataaars/png?seed=jane-smith&mouth=smile&eyebrows=defaultNatural&eyes=default,<p>Jane Smith is a marketing specialist with expertise in digital marketing strategies.</p>,Marketing Specialist,Jane.Smith@example.com\nJohn, Doe, 123-456-7890, https://api.dicebear.com/8.x/avataaars/png?seed=john-doe&mouth=smile&eyebrows=defaultNatural&eyes=default,<p>John Doe is a software engineer with 5 years of experience in web development.</p>,Software Engineer,john.doe@example.com',
                 systemMessage: `fName is first , last name is lname, phone is random phone numbers, topImage is a URL`,
                 callback: this._handleImport.bind(this),
             },
@@ -185,7 +185,7 @@ const aiStateSeederManager = {
                 item.fName = item.fName || 'N/A';
                 item.lName = item.lName || '';
                 item.phone = item.phone || 'N/A';
-                item.topImage = item.topImage || `https://api.dicebear.com/6.x/initials/png?seed=${item.fName}%20${item.lName}&backgroundColor=808080`;
+                item.topImage = item.topImage || `https://api.dicebear.com/8.x/initials/png?seed=${item.fName}%20${item.lName}&backgroundColor=808080`;
                 item.bodyContent = item.bodyContent || 'N/A';
                 item.position = item.position || 'N/A';
                 item.email = item.email || 'N/A';
