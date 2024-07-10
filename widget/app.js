@@ -94,6 +94,12 @@
 
             attrs.$observe('finalSrc', function() {
                 var _img = attrs.finalSrc;
+                if (_img.includes('dicebear') && attrs.dicebearScale){
+                    let urlObj = new URL(_img);
+                    let params = urlObj.searchParams;
+                    params.delete('scale');
+                     _img = urlObj.origin + urlObj.pathname + '?' + params.toString();
+                }
 
                 if (attrs.cropType == 'resize') {
                     Buildfire.imageLib.local.resizeImage(_img, {
@@ -164,7 +170,7 @@
         } else {
           buildfire.navigation._goBackOne();
         }
-        
+
       };
 
       buildfire.history.onPop(function(data, err){
