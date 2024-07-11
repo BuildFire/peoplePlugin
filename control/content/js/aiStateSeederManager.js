@@ -48,7 +48,7 @@ const aiStateSeederManager = {
             importOptions: {
                 jsonTemplate: this.jsonTemplate,
                 sampleCSV:
-                    'Jane, Smith, 123-456-7890, https://api.dicebear.com/8.x/avataaars/png?seed=jane-smith&mouth=smile&eyebrows=defaultNatural&eyes=default,<p>Jane Smith is a marketing specialist with expertise in digital marketing strategies.</p>,Marketing Specialist,Jane.Smith@example.com\nJohn, Doe, 123-456-7890, https://api.dicebear.com/8.x/avataaars/png?seed=john-doe&mouth=smile&eyebrows=defaultNatural&eyes=default,<p>John Doe is a software engineer with 5 years of experience in web development.</p>,Software Engineer,john.doe@example.com',
+                    'Jane, Smith, 123-456-7890, https://api.dicebear.com/8.x/avataaars/png?seed=jane-smith&mouth=smile&eyebrows=defaultNatural&eyes=default,Jane Smith is a marketing specialist with expertise in digital marketing strategies.,Marketing Specialist,Jane.Smith@example.com\nJohn, Doe, 123-456-7890, https://api.dicebear.com/8.x/avataaars/png?seed=john-doe&mouth=smile&eyebrows=defaultNatural&eyes=default,John Doe is a software engineer with 5 years of experience in web development.,Software Engineer,john.doe@example.com',
                 systemMessage: `fName is first , last name is lname, phone is random phone numbers, topImage is a URL`,
                 callback: this._handleImport.bind(this),
             },
