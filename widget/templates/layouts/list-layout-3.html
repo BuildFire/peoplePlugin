@@ -12,7 +12,7 @@
       <div class="list-items list-layout" ng-if="WidgetHome.data" infinite-scroll-distance="1" data-infinite-container=".infinite-scroll-parent" infinite-scroll="WidgetHome.loadMore(undefined,undefined,true)" infinite-scroll-disabled="WidgetHome.noMore">
         <div class="list-item" ng-repeat="item in WidgetHome.items" ng-click="WidgetHome.getPeopleDetails(item.id)">
           <div ng-if="item.data.topImage" class="media">
-            <img class="people-thumbnail-img text-overlay-round" load-image="1x1" crop-width="120" crop-height="120" crop-type="crop" data-final-src="{{item.data.topImage}}">
+            <img class="people-thumbnail-img text-overlay-round" load-image="1x1" crop-width="120" crop-height="120" crop-type="crop" dicebear-scale="1" data-final-src="{{item.data.topImage}}">
           </div>
           <!-- <div ng-if="!item.data.topImage" class="media pull-left border-radius-four people-thumbnail margin-right-ten" ng-click="WidgetHome.getPeopleDetails(item.id)">
             <div class="people-thumbnail-img text-overlay" style="background-image: url(../../../styles/media/holder-2x1.png); background-size: cover; background-position: center;height: 60px"></div>

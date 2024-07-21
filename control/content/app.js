@@ -169,6 +169,12 @@
         }])
         .filter('getImageUrl', function () {
             return function (url, width, height, type) {
+                if (url.includes('dicebear')){
+                    let urlObj = new URL(url);
+                    let params = urlObj.searchParams;
+                    params.delete('scale');
+                    url = urlObj.origin + urlObj.pathname + '?' + params.toString();
+                }
                 if (type == 'resize')
                     return buildfire.imageLib.resizeImage(url, {
                         width: width,
