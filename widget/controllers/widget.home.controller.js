@@ -117,11 +117,6 @@
                     executeSearch();
                 };
 
-                $scope.onSearchSubmit = function(e) {
-                    //e.preventDefault();
-                    console.log(e);
-                };
-
                 var MANUALLY = 'Manually',
                     OLDEST_TO_NEWEST = 'Oldest to Newest',
                     NEWEST_TO_OLDEST = 'Newest to Oldest',

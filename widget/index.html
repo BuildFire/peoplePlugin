@@ -36,23 +36,26 @@
 </head>
 <body class="body-scroll" style="overflow-y: hidden !important">
 <div class="main_view" ng-controller="WidgetHomeCtrl as WidgetHome">
-  <div class="no-matches load-in backgroundColorTheme" ng-if="searchInput && WidgetHome.items.length <= 0">
-    <h1>NO RESULTS</h1>
-    <h2>Please try a different search query.</h2>
-  </div>
-  <form class="search-form form search-holder backgroundColorTheme" ng-submit="onSearchSubmit(this)" ng-show="showHome">
-    <div class="search-container backgroundColorTheme">
-      <img class="search-icon" src="search.png" alt="Search"/>
-      <input
-      class="form-control bodyTextTheme"
-      ng-change="onSearchChange()"
-      ng-model="searchInput"
-      type="text"
-      placeholder="Search" />
-      <button ng-click="clear()" type="button" class="btn-icon icon icon-cross2 search-clear" alt="Clear"/></button>
-    </div>
-  </form>
   <div class="slide infinite-scroll-parent" id="scrollable" data-back-img="{{ backgroundImage}}" ng-show="showHome">
+    <div class="sticky-top-section">
+      <div class="searchItem">
+        <div class="search-container">
+          <label for="searchTxt" class="search-label">
+            <svg xmlns="http://www.w3.org/2000/svg" height="16" viewBox="0 0 16 16" width="16">
+              <path
+                d="m15.504 13.616-3.79-3.223c-.392-.353-.811-.514-1.149-.499.895-1.048 1.435-2.407 1.435-3.893 0-3.314-2.686-6-6-6s-6 2.686-6 6 2.686 6 6 6c1.486 0 2.845-.54 3.893-1.435-.016.338.146.757.499 1.149l3.223 3.79c.552.613 1.453.665 2.003.115s.498-1.452-.115-2.003zm-9.504-3.616c-2.209 0-4-1.791-4-4s1.791-4 4-4 4 1.791 4 4-1.791 4-4 4z" />
+            </svg>
+          </label>
+          <input class="search-text-input" type="text" name="search" id="searchTxt" placeholder="Search" ng-change="onSearchChange()" ng-model="searchInput">
+          <label ng-click="clear()" ng-class="!searchInput && 'disabled-clear-search'" class="icon-cross2 search-label"></label>
+        </div>
+      </div>
+    </div>
+    <div class="no-matches load-in backgroundColorTheme" ng-if="searchInput && !WidgetHome.items.length">
+      <img src="../../../styles/media/empty.svg" alt="Empty State">
+      <h1>NO RESULTS</h1>
+      <h2>Please try a different search query.</h2>
+    </div>
      <div>
         <div ng-if="WidgetHome.data.design.listLayout"
            ng-include="'templates/layouts/' + WidgetHome.data.design.listLayout + '.html'">
