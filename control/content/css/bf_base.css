@@ -21,9 +21,7 @@
 html {
 font-size: 16px !important;
 }
-body {
-font-family: 'Conv_apercu_regular','Helvetica','Sans-Serif','Arial';    
-}
+
 /* Text  */
 p {
   font-size: .875rem;
@@ -43,7 +41,7 @@ label{
   font-size: .75rem;
 }
 h4, h5, h6 {
-margin-bottom: .5em;    
+margin-bottom: .5em;
 }
 .section-title, h1 {
   font-size: 1.125rem;
@@ -52,19 +50,10 @@ margin-bottom: .5em;
   padding-top: .875rem;
   margin-bottom: 1.5rem;
   margin-top: 0;
-  font-family: 'Conv_apercu_bold','Helvetica','Sans-Serif','Arial';
 }
-.section-title::before,
-h1::before {
-  display: block;
-  content: '';
-  height: .25rem;
-  width: 3.5rem;
-  margin-bottom: .875rem;
-  background-color: var(--c-info);
-}
+
 .text-secondary {
-  color: var(--c-gray6); 
+  color: var(--c-gray6);
 }
 .subtitle, h2{
   font-size: 1.125rem;
@@ -73,7 +62,6 @@ h1::before {
   padding-top: .875rem;
   margin-bottom: 1.25rem;
   margin-top: 0;
-  font-family: 'Conv_apercu_regular','Helvetica','Sans-Serif','Arial'; 
 }
 
 /* Form Controls */
@@ -84,7 +72,6 @@ input[type="date"],
 input[type="email"],
 input[type="number"],
 textarea {
-  /* font-family: 'Conv_apercu_regular','Helvetica','Sans-Serif','Arial'; */
   font-size: .85rem;
   padding: .375rem .75rem;
   border: 1px solid var(--c-gray3);
@@ -107,23 +94,23 @@ textarea::-webkit-input-placeholder {
 }
 
 textarea:-moz-placeholder { /* Firefox 18- */
-  color: var(--c-gray4) !important;  
+  color: var(--c-gray4) !important;
 }
 
 textarea::-moz-placeholder {  /* Firefox 19+ */
-  color: var(--c-gray4) !important;  
+  color: var(--c-gray4) !important;
 }
 
 textarea:-ms-input-placeholder {
-  color: var(--c-gray4) !important;  
+  color: var(--c-gray4) !important;
 }
 
 textarea::placeholder {
-  color: var(--c-gray4) !important;  
+  color: var(--c-gray4) !important;
 }
 
 input[type="date"] {
-    font-size: .75rem;  
+    font-size: .75rem;
 }
 select:hover,
 select:active,
@@ -140,7 +127,6 @@ input[type="password"]:active {
     border: 1px solid var(--c-primary);
 }
 input[type="text"]::placeholder {
-  font-family: 'Conv_apercu_regular','Helvetica','Sans-Serif','Arial';
   font-size: .875rem;
   color: var(--c-gray4);
 }
@@ -148,11 +134,11 @@ input[type="text"]::placeholder {
   min-width: 15rem;
 }
 .input-control {
-  margin: 1rem 0; 
+  margin: 1rem 0;
 }
 .input-control input,
 .input-control textarea {
-  width: 100%;    
+  width: 100%;
 }
 .input-control label {
   font-size: .875rem;
@@ -243,7 +229,6 @@ button{
   box-shadow: 0;
 }
 .btn {
-    font-family: 'Conv_apercu_regular','Helvetica','Sans-Serif','Arial';
     font-size: .75rem;
     min-width: 6rem;
     height: 2.125rem;
@@ -258,7 +243,7 @@ button{
 }
 .btn--icon {
     width: 2.5rem;
-    height: 2.5rem; 
+    height: 2.5rem;
     border-radius: .25rem;
     font-size: 1.125rem;
     display: flex;
@@ -517,7 +502,7 @@ p.info-note {
   margin-bottom: 1.5rem;
   border-radius: 0.25rem;
 }
-p.info-note.info-note-transparent { 
+p.info-note.info-note-transparent {
   margin-top: 1rem;
   background-color: transparent;
   padding: 0.5rem 0rem;
@@ -571,7 +556,7 @@ p.info-note.info-note-transparent {
   font-size: .875rem;
 }
 .link--default {
-color: var(--c-primary); 
+color: var(--c-primary);
 }
 
 /* Empty State */
@@ -600,7 +585,6 @@ color: var(--c-primary);
 }
 
 .table span.email {
-  font-family: 'Conv_apercu_regular','Helvetica','Sans-Serif','Arial';
   font-size: .875rem;
   padding: .5rem .75rem;
   border: 1px solid transparent;
@@ -613,7 +597,7 @@ color: var(--c-primary);
   overflow: hidden;
 }
 .text--black {
-color: var(--c-info);    
+color: var(--c-info);
 }
 .padded {
   padding: 16px;
@@ -630,7 +614,7 @@ color: var(--c-info);
 .padded-y {
   padding-left: 0;
   padding-right: 0;
-}  
+}
 .padded-x {
   padding-top: 0;
   padding-bottom: 0;
@@ -650,7 +634,7 @@ color: var(--c-info);
 .margin-y {
   margin-left: 0;
   margin-right: 0;
-}  
+}
 .margin-x {
   margin-top: 0;
   margin-bottom: 0;
@@ -822,7 +806,7 @@ color: var(--c-info);
   transition: all ease-in-out .1s;
   z-index: 2;
 }
-.filters-dropdown .input-control.side-label label, 
+.filters-dropdown .input-control.side-label label,
 .filters-dropdown .input-control.side-label .label-wrap{
   width: 20%;
   font-size: .75rem;
