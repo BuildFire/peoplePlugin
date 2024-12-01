@@ -127,7 +127,7 @@
                         if (err) {
                             console.error(err)
                         } else {
-                            buildfire.device.share({ 
+                            buildfire.device.share({
                                 subject: link.title,
                                 text: link.title,
                                 image: 'http://myImageUrl',
@@ -205,7 +205,7 @@
                                 });
                             }
 
-                            WidgetPeople.item = result.data; 
+                            WidgetPeople.item = result.data;
                             //WidgetPeople.item = {"email":"nenor1995@gmail.com","topImage":"https://images.unsplash.com/photo-1564349683136-77e08dba1ef7?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max&ixid=eyJhcHBfaWQiOjQ0MDV9","fName":"Nedeljko","lName":"Ruzic","position":"Dev","phone":"+38766151304","deepLinkUrl":"appcba20875-ad8a-11e9-8fc5-06e43182e96c://plugin?dld={\"id\":\"5f2193a34f3d460651721008\"}","dateCreated":"","socialLinks":[],"bodyContent":"","rank":99999,"searchEngineDocumentId":"Jygom3MBS769KF4jtqXP"}
                             console.log(result.data)
                             if(Object.keys(result.data).length === 0) {
@@ -217,7 +217,12 @@
                                     $scope.$digest();
                                 })
                             } else {
-                                $scope.$digest();
+                                buildfire.dynamic.expressions.evaluate({expression: WidgetPeople.item.bodyContent}, (err, result) => {
+                                    if (err) return console.error(err);
+                                    WidgetPeople.item.bodyContent = result.evaluatedExpression
+                                    $scope.$digest();
+                                    buildfire.dynamicBlocks.execute();
+                                })
                             }
                         }
                         bindOnUpdate();
@@ -326,7 +331,13 @@
                        break;
                      case 'updateItem':
                         WidgetPeople.item = msg.item;
-                        if (!$scope.$$phase) $scope.$apply();
+                         buildfire.dynamic.expressions.evaluate({expression: WidgetPeople.item.bodyContent}, (err, result) => {
+                             if (err) return console.error(err);
+                             WidgetPeople.item.bodyContent = result.evaluatedExpression
+                             if (!$scope.$$phase) $scope.$apply();
+                             buildfire.dynamicBlocks.execute();
+                         })
+
                        break;
                      case 'goHome':
                         Location.goToHome();
