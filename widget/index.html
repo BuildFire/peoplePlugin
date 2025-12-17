@@ -64,12 +64,5 @@
   </div>
   <div ng-view="" class="slide content" ng-hide="showHome" data-back-img="{{ backgroundImage}}"></div>
 </div>
-<script>
-  var frameType = buildfire ? buildfire.getFrameType() : '';
-
-  if (frameType === 'LAUNCHER_PLUGIN') {
-    buildfire.appearance.titlebar.show();
-  }
-</script>
 </body>
 </html>
