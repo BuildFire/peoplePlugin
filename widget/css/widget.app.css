@@ -2,17 +2,11 @@
 body {
   -webkit-overflow-scrolling: auto !important;
 }
-html {
-    padding-top: var(--bf-safe-area-inset-top);
-    padding-bottom: var(--bf-safe-area-inset-bottom);
 
+.infinite-scroll-parent {
+  padding-top: var(--bf-safe-area-inset-top) !important;
 }
-.slide {
-    position: relative !important;
-    height: calc(100vh - (var(--bf-safe-area-inset-bottom) + var(--bf-safe-area-inset-top))) !important;
-    overflow: scroll;
 
-}
 /* Global Styles ////////////////////////////////////////////////////////////////////////////// */
 html{
 	font-size: 16px !important;
