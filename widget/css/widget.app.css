@@ -3,10 +3,6 @@ body {
   -webkit-overflow-scrolling: auto !important;
 }
 
-.infinite-scroll-parent {
-  padding-top: var(--bf-safe-area-inset-top) !important;
-}
-
 /* Global Styles ////////////////////////////////////////////////////////////////////////////// */
 html{
 	font-size: 16px !important;
@@ -340,6 +336,9 @@ p:empty{
 .list-items .list-item{
 	position:relative;
 }
+html[safe-area="true"] .list-items {
+  padding-bottom: var(--bf-safe-area-inset-bottom);
+}
 /* End Plugin CSS */
 
 /*
@@ -439,6 +438,9 @@ ol li{
 
 .text-white{
 	color: white !important;
+}
+.infinite-scroll-parent {
+  padding-bottom: 2.5rem;
 }
 
 .search-box {
