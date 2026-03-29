@@ -3,7 +3,7 @@
   ,"pluginName":"People"
   ,"pluginDescription":"Simplify communication with our People plugin, a centralized directory for managing contacts, fostering connections, and enhancing collaboration within your app."
   ,"supportEmail":"support@buildfire.com"
-  ,"supportSite":"http://learn.appdocumentation.com/plugin-tutorials/people-plugin-tutorial/"
+  ,"supportSite":"https://help.appdocumentation.com/how-to-use-the-people-plugin"
   ,"pluginIcon":"icon.png"
   ,"offlineModeEnabled": true
   ,"control":{
