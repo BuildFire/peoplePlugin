@@ -2,6 +2,7 @@
 body {
   -webkit-overflow-scrolling: auto !important;
 }
+
 /* Global Styles ////////////////////////////////////////////////////////////////////////////// */
 html{
 	font-size: 16px !important;
@@ -336,11 +337,9 @@ p:empty{
 	position:relative;
 }
 html[safe-area="true"] .list-items {
-  padding-bottom: env(safe-area-inset-bottom);
-  padding-bottom: constant(safe-area-inset-bottom);
+  padding-bottom: var(--bf-safe-area-inset-bottom);
 }
 /* End Plugin CSS */
-
 
 /*
 * Carousel container styling
@@ -443,6 +442,7 @@ ol li{
 .infinite-scroll-parent {
   padding-bottom: 2.5rem;
 }
+
 .search-box {
   display: block;
   width: 100%;
